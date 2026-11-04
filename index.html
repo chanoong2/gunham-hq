@@ -11,9 +11,9 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 <style>
-:root{--navy:#13285E;--navy2:#0B1C47;--sky:#2FA6EE;--sky2:#1E8FD8;--skyl:#E6F4FD;--ice:#F4F8FC;--ink:#0F1F3D;--sub:#5C6F8C;--line:#DCE6F0;--gold:#E7A321;--goldl:#FFF5DF;--red:#E5484D;--redl:#FDECEC;--green:#16A36D;--greenl:#E3F6EE;--orange:#F08C00;--purple:#7B5BD6;--r:14px}
+:root{--navy:#0E6BB8;--navy2:#0A5596;--sky:#38ACEF;--sky2:#1E93DD;--skyl:#E4F4FE;--ice:#F1F8FE;--ink:#0F2440;--sub:#587089;--line:#D3E8F7;--gold:#E7A321;--goldl:#FFF5DF;--red:#E5484D;--redl:#FDECEC;--green:#16A36D;--greenl:#E3F6EE;--orange:#F08C00;--purple:#7B5BD6;--r:14px}
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html,body{background:var(--ice);color:var(--ink);font-family:Pretendard,'Malgun Gothic',system-ui,sans-serif;font-size:15px;line-height:1.5;word-break:keep-all}
+html,body{background:var(--ice);color:var(--ink);font-family:Pretendard,'Malgun Gothic',system-ui,sans-serif;font-size:15.5px;line-height:1.5;word-break:keep-all}
 button,input,select,textarea{font:inherit;color:inherit}
 button{cursor:pointer;border:0;background:none}
 a{color:inherit;text-decoration:none}
@@ -21,7 +21,7 @@ a{color:inherit;text-decoration:none}
 /* layout */
 #app{min-height:100vh}
 .side{display:none}
-.top{position:sticky;top:0;z-index:20;background:var(--navy);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:10px}
+.top{position:sticky;top:0;z-index:20;background:linear-gradient(135deg,#3AB0F2,#1E8FD8);color:#fff;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;display:flex;align-items:center;gap:10px}
 .top img{height:26px}.top .tt{font-weight:800;font-size:16px;flex:1;letter-spacing:-.2px}.top .tt small{display:block;font-size:11px;font-weight:500;opacity:.7;letter-spacing:0}
 .av{width:34px;height:34px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex:0 0 auto}
 .av.sm{width:26px;height:26px;font-size:11px}.av.lg{width:44px;height:44px;font-size:16px}
@@ -36,10 +36,10 @@ main{padding:14px 14px calc(90px + env(safe-area-inset-bottom));max-width:620px;
 .ch{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px}
 .ch h3{font-size:16px;font-weight:800;letter-spacing:-.3px}.ch .more{font-size:13px;color:var(--sky2);font-weight:700}
 .sec-t{font-size:13px;font-weight:800;color:var(--sub);margin:18px 2px 8px;letter-spacing:.2px}
-.hero{background:linear-gradient(135deg,var(--navy) 0%,#1B4A9A 100%);color:#fff;border-radius:18px;padding:18px;margin-bottom:12px;display:flex;gap:14px;align-items:center}
+.hero{background:linear-gradient(135deg,#46B6F4 0%,#1E8FD8 100%);box-shadow:0 8px 22px rgba(30,147,221,.25);color:#fff;border-radius:18px;padding:18px;margin-bottom:12px;display:flex;gap:14px;align-items:center}
 .hero .d{font-size:13px;opacity:.8}.hero h2{font-size:20px;font-weight:800;margin:2px 0 4px;letter-spacing:-.4px}.hero p{font-size:13.5px;opacity:.9}
 .ring{--p:0;width:74px;height:74px;border-radius:50%;background:conic-gradient(var(--gold) calc(var(--p)*1%),rgba(255,255,255,.18) 0);display:flex;align-items:center;justify-content:center;flex:0 0 auto}
-.ring b{width:58px;height:58px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800}
+.ring b{width:58px;height:58px;border-radius:50%;background:#2C9DE4;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:800}
 .ring.light{background:conic-gradient(var(--sky2) calc(var(--p)*1%),#E7EEF6 0)}.ring.light b{background:#fff;color:var(--navy)}
 .ring.s{width:46px;height:46px}.ring.s b{width:36px;height:36px;font-size:12px}
 /* todo rows */
@@ -119,7 +119,7 @@ textarea.in{height:auto;min-height:84px;padding:10px 12px;resize:vertical;line-h
 .sales{background:linear-gradient(135deg,#FFF6E2,#FFFDF7);border:1px solid #F3DDA8}
 .demo{background:var(--gold);color:var(--navy2);font-size:12px;font-weight:800;text-align:center;padding:5px}
 /* login */
-.login{min-height:100vh;background:linear-gradient(160deg,var(--navy) 0%,#1B4A9A 70%,var(--sky2) 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 20px;color:#fff}
+.login{min-height:100vh;background:linear-gradient(165deg,#7FD0FA 0%,#38ACEF 45%,#1E8FD8 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 20px;color:#fff}
 .login img{width:210px;margin-bottom:8px}.login h1{font-size:22px;font-weight:800;margin-bottom:4px}.login p{opacity:.8;font-size:14px;margin-bottom:22px}
 .login .box{background:#fff;color:var(--ink);border-radius:20px;padding:20px;width:100%;max-width:400px}
 .who{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}.who button{border:1.5px solid var(--line);border-radius:12px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:5px;font-weight:700;font-size:14px}.who button small{font-size:11px;color:var(--sub);font-weight:500}.who button.on{border-color:var(--sky2);background:var(--skyl)}
@@ -127,10 +127,10 @@ textarea.in{height:auto;min-height:84px;padding:10px 12px;resize:vertical;line-h
 /* PC */
 @media(min-width:900px){
   .top{display:none}.tabs{display:none}
-  .side{display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;width:236px;background:var(--navy);color:#fff;padding:22px 14px}
+  .side{display:flex;flex-direction:column;position:fixed;top:0;left:0;bottom:0;width:236px;background:linear-gradient(180deg,#2BA3EC,#0F74C2);color:#fff;padding:22px 14px}
   .side img{width:150px;margin:0 8px 6px}.side .st{font-size:12px;opacity:.6;margin:0 10px 22px}
   .side button.nv{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:12px;font-weight:700;font-size:15px;color:#B8C6E0;margin-bottom:4px}
-  .side button.nv svg{width:21px;height:21px}.side button.nv.on{background:rgba(255,255,255,.12);color:#fff}
+  .side button.nv svg{width:21px;height:21px}.side button.nv{color:#E3F3FD}.side button.nv.on{background:rgba(255,255,255,.22);color:#fff}
   .side .me{margin-top:auto;display:flex;align-items:center;gap:10px;padding:12px 8px;border-top:1px solid rgba(255,255,255,.12)}.side .me div{flex:1;font-size:14px;font-weight:700}.side .me small{display:block;font-weight:500;opacity:.6;font-size:12px}
   main{margin-left:236px;max-width:1180px;padding:26px 30px 40px}
   .pc2{display:grid;grid-template-columns:1.25fr 1fr;gap:16px;align-items:start}
@@ -142,6 +142,21 @@ textarea.in{height:auto;min-height:84px;padding:10px 12px;resize:vertical;line-h
   .toast{bottom:30px}
   .ptitle{display:block!important}
 }
+/* finance */
+.fin-sum{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px}.fin-sum .net{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between}.fin-sum .net b{font-size:21px}
+@media(min-width:900px){.fin-sum{grid-template-columns:repeat(3,1fr)}.fin-sum .net{grid-column:auto;display:block}}
+.fin-sum>div{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 12px}.fin-sum span{display:block;font-size:12.5px;color:var(--sub);font-weight:700}.fin-sum b{display:block;font-size:17px;font-weight:800;letter-spacing:-.4px;margin-top:2px}.fin-sum small{font-size:11.5px;color:var(--sub)}
+.fin-sum .fi b{color:var(--sky2)}.fin-sum .fo b{color:var(--red)}.fin-sum .net{background:linear-gradient(135deg,#46B6F4,#1E8FD8);border:0;color:#fff}.fin-sum .net span,.fin-sum .net small{color:#E3F4FE}
+.frow{display:flex;align-items:center;gap:11px;padding:12px 2px;border-bottom:1px solid #EEF4FA}.frow:last-child{border-bottom:0}
+.frow .tx{flex:1;min-width:0}.frow .tx b{display:block;font-weight:700;font-size:15.5px}.frow .tx span{font-size:12.5px;color:var(--sub)}.frow .amt{text-align:right;font-weight:800;font-size:15.5px;white-space:nowrap}.frow .amt small{display:block;font-size:11.5px;color:var(--sub);font-weight:600}
+.frow.done .tx b{color:#94A3B8}
+.ghead{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;font-weight:800;color:var(--navy);background:var(--skyl);border-radius:10px;padding:7px 11px;margin:12px 0 2px}
+.tot{background:var(--skyl);border-radius:14px;padding:12px 14px;margin-top:10px}.tot div{display:flex;justify-content:space-between;font-size:14px;padding:3px 0}.tot div b{font-weight:800}.tot .big{font-size:17px;border-top:1px dashed #A9D4F2;margin-top:4px;padding-top:7px}
+.calc{background:var(--skyl);border-radius:12px;padding:10px 12px;font-size:14px;margin:-4px 0 12px;line-height:1.7}.calc b{color:var(--navy);font-size:16px}
+.won{position:relative}.won input{padding-right:34px;font-size:18px;font-weight:800}.won:after{content:'원';position:absolute;right:13px;top:12px;color:var(--sub);font-weight:700}
+.appr{border:2px solid var(--gold);background:#FFFBEF;border-radius:14px;padding:12px 14px;margin-bottom:12px}.appr h3{font-size:16px;font-weight:800;margin-bottom:6px}
+.appr .ar{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #F3E7C4}.appr .ar:last-child{border-bottom:0}.appr .ar .tx{flex:1;min-width:0;font-size:14px}.appr .ar .tx b{display:block}.appr .ar .tx span{font-size:12px;color:var(--sub)}
+.lock{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--sub);background:#F4F8FC;border-radius:10px;padding:8px 11px;margin-bottom:12px}
 .ptitle{display:none;font-size:24px;font-weight:800;letter-spacing:-.6px;margin-bottom:16px}
 </style>
 </head>
@@ -160,6 +175,7 @@ const I = {
   task:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg>',
   rep:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>',
   admin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  fin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M7 9.5l1.6 5 1.4-4 1.4 4 1.6-5M6 12h8"/><circle cx="17.5" cy="12" r="1.6"/></svg>',
   plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>'
 };
@@ -179,7 +195,7 @@ const dday = s => { if(!s) return ''; const n = Math.round((parse(s) - parse(S.t
 function toast(t){ const el = document.createElement('div'); el.className='toast'; el.textContent=t; document.body.appendChild(el); setTimeout(()=>el.remove(), 2600); }
 
 /* ============ 상태 ============ */
-const S = { me: localStorage.hq_me||'', token: localStorage.hq_token||'', tab: 'home', d: null, today: ymd(new Date()), calM: null, calSel: null, calScope: 'all', taskScope: 'mine', taskSt: 'open', repWeek: null, ver: '0' };
+const S = { me: localStorage.hq_me||'', token: localStorage.hq_token||'', tab: 'home', d: null, today: ymd(new Date()), calM: null, calSel: null, calScope: 'all', taskScope: 'mine', taskSt: 'open', repWeek: null, ver: '0', finM: null, finSeg: 'out' };
 
 /* ============ API ============ */
 async function api(action, body={}){
@@ -225,7 +241,9 @@ function rate(owner, from, to){
 const openTasks = () => (S.d.tasks||[]).filter(t => !['완료','보류'].includes(t.status));
 const overdue = t => t.due && t.due < S.today && !['완료','보류'].includes(t.status);
 const STATUS = ['할 일','진행 중','검토 요청','완료','보류'];
-const stChip = s => `<span class="chip ${({'할 일':'','진행 중':'blue','검토 요청':'purple','완료':'green','보류':'gold'})[s]||''}">${esc(s)}</span>`;
+const stLabel = s => s==='검토 요청' ? '승인 대기' : s;
+const stChip = s => `<span class="chip ${({'할 일':'','진행 중':'blue','검토 요청':'gold','완료':'green','보류':''})[s]||''}">${esc(stLabel(s))}</span>`;
+const assigned = t => t.by && t.by !== t.owner;
 const prioChip = p => p==='긴급'?'<span class="chip red">긴급</span>':p==='높음'?'<span class="chip gold">높음</span>':'';
 const EVT = { '회의':'#1E8FD8', '교육':'#7B5BD6', '오픈':'#16A36D', '행사':'#E7A321', '휴무':'#E5484D', '기타':'#5C6F8C', '정기':'#0B3B75', '마감':'#F08C00', '미팅':'#16A36D' };
 function itemsOn(s, scope){
@@ -238,7 +256,7 @@ function itemsOn(s, scope){
 }
 
 /* ============ 렌더 공통 ============ */
-const NAV = () => [['home','홈',I.home],['cal','일정',I.cal],['task','업무',I.task],['rep','보고',I.rep]].concat(S.d && S.d.admin ? [['admin','관리',I.admin]] : []);
+const NAV = () => [['home','홈',I.home],['cal','일정',I.cal],['task','업무',I.task],['rep','보고',I.rep]].concat(S.d && S.d.fin && S.d.fin!=='없음' ? [['fin','재무',I.fin]] : []).concat(S.d && S.d.admin ? [['admin','관리',I.admin]] : []);
 function render(){
   if (!S.d) return;
   const nav = NAV();
@@ -266,6 +284,7 @@ function viewHome(){
   const wk = rate(me, monday(td), td);
   const left = `
   <div class="hero"><div style="flex:1"><div class="d">${esc(md(td))}${isWork(td)?'':' · 쉬는 날'}</div><h2>${esc(me)}님, ${rs.length? (done===rs.length?'오늘 할 일 끝!':'오늘 할 일 '+(rs.length-done)+'개 남았어요') : '오늘 정기업무가 없어요'}</h2><p>${wk.p!=null?'이번 주 정기업무 완료율 '+wk.p+'% · ':''}진행 중 업무 ${myTasks.length}건</p></div><div class="ring" style="--p:${p}"><b>${p}%</b></div></div>
+  ${approvalCard()}
   ${S.d.admin? teamStrip():''}
   <div class="card"><div class="ch"><h3>오늘 할 일</h3><span class="chip blue">${done}/${rs.length}</span></div>
     ${rs.length? rs.map(r=>todoRow(r, td)).join('') : '<div class="empty">오늘은 정기업무가 없어요</div>'}</div>
@@ -285,6 +304,14 @@ function todoRow(r, s){
   const c = chk(s, r.id); const d = c && c.done==='Y';
   return `<div class="todo ${d?'done':''}"><button class="chk ${d?'on':''}" data-act="toggle" data-rid="${esc(r.id)}" data-date="${s}" aria-label="완료">${d?I.check:''}</button>
   <div class="tx" data-act="routine" data-rid="${esc(r.id)}" data-date="${s}"><b>${esc(r.title)}</b><span><span class="cat">${esc(r.cat||'업무')}</span>${c&&c.memo?'메모: '+esc(c.memo):esc(r.desc||'')}</span></div>${r.time?`<span class="tm">${esc(r.time)}</span>`:''}</div>`;
+}
+function approvalCard(){
+  const ts = S.d.admin ? (S.d.tasks||[]).filter(t=>t.status==='검토 요청') : [];
+  const fs = S.d.fin==='전체' ? (S.d.finance||[]).filter(f=>f.status==='대기') : [];
+  if (!ts.length && !fs.length) return '';
+  return `<div class="appr"><h3>승인이 필요해요 · ${ts.length+fs.length}건</h3>
+  ${ts.map(t=>`<div class="ar">${av(t.owner,'sm')}<div class="tx"><b>${esc(t.title)}</b><span>${esc(t.owner)} 완료 보고 · 업무</span></div><button class="btn sm" data-act="task" data-id="${esc(t.id)}">확인</button></div>`).join('')}
+  ${fs.map(f=>`<div class="ar">${av(f.by,'sm')}<div class="tx"><b>${esc(f.kind)} · ${esc(f.title||f.cat)}</b><span>${esc(f.by)} · ${esc(f.branch||'')} · ${won(vatCalc(f.amount,f.vat).total)}</span></div><button class="btn sm" data-act="finOpen" data-id="${esc(f.id)}">확인</button></div>`).join('')}</div>`;
 }
 function teamStrip(){
   const td = S.today; const ms = (S.d.members||[]).filter(m=>m.active!=='N');
@@ -328,7 +355,7 @@ function viewTask(){
   return `<div class="ptitle">업무</div>
   <div class="seg"><button class="${S.taskScope==='mine'?'on':''}" data-act="taskScope" data-v="mine">내 업무</button><button class="${S.taskScope==='all'?'on':''}" data-act="taskScope" data-v="all">팀 전체</button></div>
   <div class="pills" style="margin-bottom:12px">${[['open','진행 중'],['done','완료'],['hold','보류']].map(x=>`<button class="${S.taskSt===x[0]?'on':''}" data-act="taskSt" data-v="${x[0]}">${x[1]} ${cnt(x[0])}</button>`).join('')}</div>
-  ${S.taskSt==='open'? `<div class="pc3">${Object.keys(by).map(k=>`<div><div class="sec-t" style="margin-top:4px">${k} · ${by[k].length}</div>${by[k].length? by[k].map(taskCard).join('') : '<div class="empty" style="background:#fff;border-radius:14px;border:1px dashed var(--line)">없음</div>'}</div>`).join('')}</div>`
+  ${S.taskSt==='open'? `<div class="pc3">${Object.keys(by).map(k=>`<div><div class="sec-t" style="margin-top:4px">${stLabel(k)} · ${by[k].length}</div>${by[k].length? by[k].map(taskCard).join('') : '<div class="empty" style="background:#fff;border-radius:14px;border:1px dashed var(--line)">없음</div>'}</div>`).join('')}</div>`
    : (ts.length? `<div class="pc3">${ts.map(taskCard).join('')}</div>` : '<div class="empty">업무가 없어요</div>')}`;
 }
 
@@ -368,6 +395,7 @@ function viewAdmin(){
   const cell = (n, s) => { if (s > td) return '<td style="background:#F4F7FB;color:#B5C1D1">·</td>'; const r = rate(n, s, s); if (!r.due) return '<td style="background:#F4F7FB;color:#B5C1D1">-</td>'; const c = r.p===100?['#16A36D','#fff']:r.p>=50?['#FFE7A8','#7A5200']:['#FDECEC','#E5484D']; return `<td style="background:${c[0]};color:${c[1]}">${r.done}/${r.due}</td>`; };
   const pipeOrder = ['신규','부재중','재연락','제안발송','상담중','미팅예정','계약','보류','거절']; const pmax = Math.max(1, ...Object.values(sales.pipe||{}));
   return `<div class="ptitle">관리 대시보드</div>
+  ${approvalCard()}
   <div class="kpis"><div class="kpi"><span>오늘 팀 정기업무</span><b>${team.due?Math.round(team.done/team.due*100):0}%<small>${team.done}/${team.due}</small></b></div>
   <div class="kpi"><span>진행 중 업무</span><b>${ot.length}<small>건</small></b></div>
   <div class="kpi ${od.length?'warn':''}"><span>마감 지난 업무</span><b>${od.length}<small>건</small></b></div>
@@ -375,7 +403,7 @@ function viewAdmin(){
   <div class="pc2"><div>
   <div class="sec-t">팀원별 현황</div>
   ${ms.map(m=>{ const r = rate(m.name, td, td), w = rate(m.name, wk, td); const mt = ot.filter(t=>t.owner===m.name); const mo = mt.filter(overdue).length; const rep = (S.d.reports||[]).find(x=>x.owner===m.name && x.week===wk); const sm = (sales.by||{})[m.name];
-    return `<div class="mem"><div class="mh">${av(m.name,'lg')}<div class="nm"><b>${esc(m.name)}</b><span>${esc(m.job||'')} · ${esc(m.role)}</span></div>${rep?'<span class="chip green">보고 제출</span>':'<span class="chip gold">보고 전</span>'}</div>
+    return `<div class="mem"><div class="mh">${av(m.name,'lg')}<div class="nm"><b>${esc(m.name)}</b><span>${esc(m.job||'')} · ${esc(m.role)} · ${rep?'보고 제출':'보고 전'}</span></div><button class="btn sm sky" data-act="assign" data-v="${esc(m.name)}">+ 업무 주기</button></div>
     <div class="stats"><div><b>${r.due? r.done+'/'+r.due : '-'}</b><span>오늘 정기업무</span></div><div><b>${w.p??'-'}${w.p!=null?'%':''}</b><span>이번 주 완료율</span></div><div><b>${mt.length}</b><span>진행 중 업무</span></div><div class="${mo?'bad':''}"><b>${mo}</b><span>마감 지남</span></div></div>
     ${sm?`<div class="stats" style="margin-top:6px"><div><b>${sm.newW}</b><span>주간 매장 등록</span></div><div><b>${sm.callW}</b><span>주간 통화</span></div><div><b>${sm.propW}</b><span>주간 제안</span></div><div class="${sm.followT?'bad':''}"><b>${sm.followT}</b><span>재연락 밀림</span></div></div>`:''}
     ${r.due? `<div class="bar g"><i style="width:${r.p}%"></i></div>`:''}</div>`; }).join('')}
@@ -395,7 +423,82 @@ function viewAdmin(){
   ${S.d.sheetUrl?`<a class="list-btn" href="${esc(S.d.sheetUrl)}" target="_blank"><span>구글시트에서 전체 데이터 보기</span><em>↗</em></a>`:''}</div>
   </div></div>`;
 }
-const VIEWS = { home: viewHome, cal: viewCal, task: viewTask, rep: viewRep, admin: viewAdmin };
+/* ============ 재무 ============ */
+const won = n => Math.round(Number(n)||0).toLocaleString('ko-KR') + '원';
+function vatCalc(amount, vat){ const a = Number(amount)||0; if (vat==='별도') { const v = Math.round(a*0.1); return { supply:a, vat:v, total:a+v }; } if (vat==='없음') return { supply:a, vat:0, total:a }; const s = Math.round(a/1.1); return { supply:s, vat:a-s, total:a }; }
+const EXP_CATS = ['임대료·관리비','인건비','광고·마케팅','식자재·물류','공사 원가','세금·공과금','수수료','소모품·비품','차량·교통','기타'];
+const CON_SUBS = ['인테리어','간판','의탁자','소품'];
+const incCats = () => S.d.fin==='전체' ? ['로열티','식자재','공사차익'] : ['로열티','식자재'];
+const finProfit = f => f.cat==='공사차익' ? vatCalc(f.amount,f.vat).supply - vatCalc(f.cost,f.vat).supply : vatCalc(f.amount,f.vat).supply;
+const stF = f => f.status==='대기'?'<span class="chip gold">승인 대기</span>':f.status==='반려'?'<span class="chip red">반려</span>':'';
+function viewFin(){
+  if (!S.d.fin || S.d.fin==='없음') return '<div class="empty">재무 권한이 없어요</div>';
+  if (!S.finM) S.finM = S.today.slice(0,7);
+  const full = S.d.fin==='전체'; const [y,m] = S.finM.split('-').map(Number);
+  const list = (S.d.finance||[]).filter(f=>f.month===S.finM && f.status!=='반려' || (f.month===S.finM && f.by===S.me));
+  const outs = list.filter(f=>f.kind==='지출'), ins = list.filter(f=>f.kind==='수입');
+  const ok = f => f.status!=='반려';
+  const outT = outs.filter(ok).reduce((a,f)=>{ const c = vatCalc(f.amount,f.vat); a.s+=c.supply; a.v+=c.vat; a.t+=c.total; if (f.done==='Y') a.paid+=c.total; return a; }, {s:0,v:0,t:0,paid:0});
+  const inProfit = ins.filter(ok).reduce((a,f)=>a+finProfit(f),0);
+  const inT = ins.filter(ok).reduce((a,f)=>{ const c = vatCalc(f.amount,f.vat); a.t+=c.total; if (f.done==='Y') a.got+=c.total; return a; }, {t:0,got:0});
+  const sum = full ? `<div class="fin-sum"><div class="fi"><span>수입</span><b>${won(inProfit)}</b><small>공급가·차익 기준</small></div><div class="fo"><span>지출</span><b>${won(outT.s)}</b><small>공급가 기준</small></div><div class="net"><div><span>남는 돈</span><small>수입 − 지출 (공급가)</small></div><b>${won(inProfit-outT.s)}</b></div></div>`
+    : `<div class="fin-sum" style="grid-template-columns:1fr 1fr"><div class="fo"><span>이번 달 지출</span><b>${won(outT.t)}</b><small>부가세 포함</small></div><div class="fi"><span>로열티·식자재</span><b>${won(inT.t)}</b><small>받음 ${won(inT.got)}</small></div></div>`;
+  const row = f => { const c = vatCalc(f.amount,f.vat); const d = f.done==='Y'; const isCon = f.cat==='공사차익';
+    return `<div class="frow ${d?'done':''}"><button class="chk ${d?'on':''}" data-act="finDone" data-id="${esc(f.id)}" aria-label="${f.kind==='지출'?'지급 완료':'받음'}">${d?I.check:''}</button>
+    <div class="tx" data-act="finOpen" data-id="${esc(f.id)}"><b>${esc(f.kind==='수입' ? (f.branch||'지점 미입력') + (isCon?' · '+f.sub:'') : f.title)}</b><span>${[f.kind==='지출'?f.branch:f.title, f.due?mdShort(f.due):'', '부가세 '+f.vat, f.by].filter(Boolean).map(esc).join(' · ')}</span> ${stF(f)}</div>
+    <div class="amt" data-act="finOpen" data-id="${esc(f.id)}">${isCon? won(finProfit(f)) : won(c.total)}<small>${isCon?'차익 (공사비 '+won(vatCalc(f.amount,f.vat).total)+')' : d?(f.kind==='지출'?'지급 완료':'받음'):(f.kind==='지출'?'지급 전':'안 받음')}</small></div></div>`; };
+  let body = '';
+  if (S.finSeg==='out') {
+    const groups = EXP_CATS.concat(['기타']).filter((c,i,a)=>a.indexOf(c)===i).map(c=>[c, outs.filter(f=>(EXP_CATS.includes(f.cat)?f.cat:'기타')===c)]).filter(g=>g[1].length);
+    body = `<div class="card"><div class="ch"><h3>${m}월 지출 목록</h3><span class="chip">${outs.length}건</span></div>
+    <button class="btn sky block" data-act="finNew" data-v="지출">+ 지출 추가</button>
+    ${groups.length? groups.map(g=>`<div class="ghead"><span>${esc(g[0])}</span><span>${won(g[1].filter(ok).reduce((a,f)=>a+vatCalc(f.amount,f.vat).total,0))}</span></div>${g[1].map(row).join('')}`).join('') : '<div class="empty">아직 지출이 없어요<br>이번 달 나갈 돈을 하나씩 적어 주세요</div>'}
+    <div class="tot"><div><span>공급가</span><b>${won(outT.s)}</b></div><div><span>부가세</span><b>${won(outT.v)}</b></div><div><span>지급 완료</span><b>${won(outT.paid)}</b></div><div><span>아직 나갈 돈</span><b style="color:var(--red)">${won(outT.t-outT.paid)}</b></div><div class="big"><span>지출 합계</span><b>${won(outT.t)}</b></div></div>
+    ${outs.length?'':`<button class="btn ghost block" style="margin-top:10px" data-act="finCopy">지난달 지출 목록 불러오기</button>`}</div>`;
+  } else {
+    body = `<div class="card"><div class="ch"><h3>${m}월 수입</h3><span class="chip">${ins.length}건</span></div><button class="btn sky block" data-act="finNew" data-v="수입">+ 수입 추가</button>
+    ${incCats().map(c=>{ const g = ins.filter(f=>f.cat===c); const tt = g.filter(ok).reduce((a,f)=>a+(c==='공사차익'?finProfit(f):vatCalc(f.amount,f.vat).total),0); const got = g.filter(f=>ok(f)&&f.done==='Y').length;
+      return `<div class="ghead"><span>${c}${c==='공사차익'?' (인테리어·간판·의탁자·소품)':''} · 받음 ${got}/${g.length}</span><span>${won(tt)}</span></div>${g.length? g.map(row).join('') : '<div class="empty" style="padding:10px 0">없음</div>'}`; }).join('')}
+    <div class="tot"><div><span>받을 돈 (부가세 포함)</span><b>${won(inT.t)}</b></div><div><span>받은 돈</span><b style="color:var(--green)">${won(inT.got)}</b></div><div><span>아직 못 받음</span><b style="color:var(--red)">${won(inT.t-inT.got)}</b></div>${full?`<div class="big"><span>수입 (공급가·차익 기준)</span><b>${won(inProfit)}</b></div>`:''}</div></div>`;
+  }
+  return `<div class="ptitle">재무</div>
+  <div class="card" style="display:flex;align-items:center;justify-content:space-between"><button class="btn sm ghost" data-act="finMove" data-v="-1">‹ 지난달</button><b style="font-size:18px">${y}년 ${m}월</b><button class="btn sm ghost" data-act="finMove" data-v="1">다음달 ›</button></div>
+  ${full? approvalCard() : `<div class="lock">쓴 내용은 대표 승인 후 확정돼요. 지출과 로열티·식자재 수입만 쓸 수 있어요.</div>`}
+  ${sum}
+  <div class="seg"><button class="${S.finSeg==='out'?'on':''}" data-act="finSeg" data-v="out">지출</button><button class="${S.finSeg==='in'?'on':''}" data-act="finSeg" data-v="in">수입</button></div>
+  <div class="pc2"><div>${body}</div><div class="card"><div class="ch"><h3>이렇게 쓰세요</h3></div><p style="font-size:14px;line-height:1.8;color:var(--sub)">① <b>+ 추가</b>로 항목을 적어요 (금액과 부가세 포함 여부)<br>② 동그라미를 누르면 <b>지급 완료 / 받음</b>으로 바뀌어요<br>③ 합계·부가세·남은 돈은 자동 계산돼요${full?'<br>④ 직원이 쓴 항목은 <b>승인</b>해야 확정돼요':''}</p></div></div>`;
+}
+function finSheet(id, kind){
+  const full = S.d.fin==='전체';
+  const f = id ? (S.d.finance||[]).find(x=>x.id===id) : { kind, cat: kind==='지출'?'기타':'로열티', sub:'인테리어', vat:'포함', month:S.finM };
+  const canEdit = !id || full || (f.by===S.me && f.status!=='승인');
+  const dis = canEdit?'':'disabled';
+  const cats = f.kind==='지출' ? EXP_CATS : incCats();
+  sheet(`<h3>${id?(canEdit?f.kind+' 수정':f.kind):f.kind+' 추가'} <span style="font-size:14px;color:var(--sub);font-weight:600">${esc(f.month)}</span></h3>
+  ${id?`<div style="margin:-6px 0 12px;display:flex;gap:6px;flex-wrap:wrap">${stF(f)}<span class="chip">작성 ${esc(f.by)}</span>${f.approver&&f.status==='승인'?`<span class="chip green">승인 ${esc(f.approver)}</span>`:''}</div>`:''}
+  ${full && f.status==='대기'?`<div class="appr"><h3>승인할까요?</h3><div class="acts"><button class="btn ghost" data-act="finAppr" data-v="0">반려</button><button class="btn sky" data-act="finAppr" data-v="1">승인</button></div></div>`:''}
+  <label class="f"><span>${f.kind==='지출'?'분류':'종류'}</span><div class="pills" id="f_cat">${cats.map(c=>`<button type="button" class="${f.cat===c?'on':''}" data-v="${c}" ${dis} onclick="pickPill(this)">${c}</button>`).join('')}</div></label>
+  <div id="f_subw" class="${f.cat==='공사차익'?'':'hide'}"><label class="f"><span>공사 항목</span><div class="pills" id="f_sub">${CON_SUBS.map(c=>`<button type="button" class="${f.sub===c?'on':''}" data-v="${c}" ${dis} onclick="pickPill(this)">${c}</button>`).join('')}</div></label></div>
+  ${f.kind==='지출'?`<label class="f"><span>무엇에 쓰는 돈인가요? (구체적으로)</span><input class="in" id="f_title" value="${esc(f.title||'')}" placeholder="예) 11월 동명점 월세, 메타 광고비 2주" ${dis}></label>`:''}
+  <label class="f"><span>${f.kind==='지출'?'거래처 · 지점':'지점 (가맹점)'}</span><input class="in" id="f_branch" value="${esc(f.branch||'')}" placeholder="${f.kind==='지출'?'예) 건물주, 메타':'예) 풍암점'}" ${dis}></label>
+  ${f.kind==='수입'?`<label class="f"><span>내용 (선택)</span><input class="in" id="f_title" value="${esc(f.title||'')}" placeholder="예) 11월 로열티" ${dis}></label>`:''}
+  <label class="f"><span id="f_amtL">${f.kind==='지출'?'금액':f.cat==='공사차익'?'가맹점에서 받는 공사비':'받을 금액'}</span><div class="won"><input class="in" id="f_amount" inputmode="numeric" value="${f.amount?Number(f.amount).toLocaleString('ko-KR'):''}" oninput="fmtWon(this);finCalc()" ${dis}></div></label>
+  <div id="f_costw" class="${f.cat==='공사차익'?'':'hide'}"><label class="f"><span>업체에 주는 원가</span><div class="won"><input class="in" id="f_cost" inputmode="numeric" value="${f.cost?Number(f.cost).toLocaleString('ko-KR'):''}" oninput="fmtWon(this);finCalc()" ${dis}></div></label></div>
+  <label class="f"><span>부가세</span><div class="pills" id="f_vat">${[['포함','부가세 포함'],['별도','부가세 별도 (+10%)'],['없음','부가세 없음']].map(v=>`<button type="button" class="${f.vat===v[0]?'on':''}" data-v="${v[0]}" ${dis} onclick="pickPill(this)">${v[1]}</button>`).join('')}</div></label>
+  <div class="calc" id="f_calc"></div>
+  <div class="row2"><label class="f"><span>${f.kind==='지출'?'지급 예정일':'받을 날'}</span><input class="in" type="date" id="f_due" value="${esc(f.due||'')}" ${dis}></label><label class="f"><span>메모</span><input class="in" id="f_memo" value="${esc(f.memo||'')}" ${dis}></label></div>
+  ${canEdit?`<div class="acts">${id?'<button class="btn red" data-act="finDel">삭제</button>':''}<button class="btn" data-act="finSave">${id?'저장':full?'등록':'등록 (승인 요청)'}</button></div>`:'<p style="font-size:13px;color:var(--sub)">승인된 항목은 대표만 고칠 수 있어요.</p>'}`);
+  $('#dim').dataset.id = id||''; $('#dim').dataset.kind = f.kind; finCalc();
+}
+function pickPill(b){ b.parentNode.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); if (b.parentNode.id==='f_cat') { const con = b.dataset.v==='공사차익'; $('#f_subw').classList.toggle('hide',!con); $('#f_costw').classList.toggle('hide',!con); if ($('#dim').dataset.kind==='수입') $('#f_amtL').textContent = con?'가맹점에서 받는 공사비':'받을 금액'; } finCalc(); }
+const pillVal = id => ($('#'+id+' button.on')||{}).dataset?.v || '';
+const numVal = id => Number(String($('#'+id)?.value||'').replace(/[^\d]/g,''))||0;
+function fmtWon(el){ const n = String(el.value).replace(/[^\d]/g,''); el.value = n ? Number(n).toLocaleString('ko-KR') : ''; }
+function finCalc(){ const el = $('#f_calc'); if (!el) return; const v = pillVal('f_vat'); const c = vatCalc(numVal('f_amount'), v);
+  if (pillVal('f_cat')==='공사차익') { const k = vatCalc(numVal('f_cost'), v); el.innerHTML = `받는 공사비 공급가 ${won(c.supply)} − 원가 공급가 ${won(k.supply)}<br>공사차익 <b>${won(c.supply-k.supply)}</b> <span style="color:var(--sub)">(부가세 별도 계산)</span>`; }
+  else el.innerHTML = `공급가 ${won(c.supply)} + 부가세 ${won(c.vat)}<br>합계 <b>${won(c.total)}</b>`; }
+
+const VIEWS = { home: viewHome, cal: viewCal, task: viewTask, rep: viewRep, fin: viewFin, admin: viewAdmin };
 
 /* ============ 시트(모달) ============ */
 function sheet(html){ closeSheet(); const d = document.createElement('div'); d.className='dim'; d.id='dim'; d.innerHTML=`<div class="sheet"><div class="grab"></div>${html}</div>`; d.addEventListener('click', e=>{ if(e.target===d) closeSheet(); }); document.body.appendChild(d); }
@@ -412,25 +515,29 @@ function routineSheet(rid, s){
   <div class="acts">${done?'<button class="btn ghost" data-act="rdone" data-v="0">완료 취소</button>':''}<button class="btn ${done?'':'sky'}" data-act="rdone" data-v="1">${done?'메모 저장':'완료로 체크'}</button></div>`);
   $('#dim').dataset.rid = rid; $('#dim').dataset.date = s;
 }
-function taskSheet(id){
-  const t = id ? (S.d.tasks||[]).find(x=>x.id===id) : { status:'할 일', owner: S.me, prio:'보통', progress:'0', start: S.today };
+function taskSheet(id, preOwner){
+  const t = id ? (S.d.tasks||[]).find(x=>x.id===id) : { status:'할 일', owner: preOwner || S.me, prio:'보통', progress:'0', start: S.today };
+  const needAppr = id && assigned(t) && !S.d.admin; // 관리자가 준 업무 → 직원은 완료 보고만
   const edit = !id || S.d.admin || t.owner===S.me || t.by===S.me;
   let cm = []; try { cm = JSON.parse(t.comments||'[]'); } catch(e){}
   if (id && !S.taskEdit) {
     sheet(`<div style="display:flex;gap:6px;margin-bottom:8px">${stChip(t.status)}${prioChip(t.prio)}${t.cat?`<span class="cat">${esc(t.cat)}</span>`:''}</div><h3>${esc(t.title)}</h3>
     <div class="stats" style="margin:-4px 0 12px"><div><b style="font-size:14px">${esc(t.owner)}</b><span>담당</span></div><div><b style="font-size:14px">${esc(t.by||'-')}</b><span>요청</span></div><div><b style="font-size:14px">${t.due?esc(mdShort(t.due)):'-'}</b><span>마감</span></div><div><b style="font-size:14px">${Number(t.progress)||0}%</b><span>진행률</span></div></div>
     ${t.desc?`<div class="rep" style="margin-bottom:12px">${esc(t.desc)}</div>`:''}
-    ${edit?`<div class="sec-t" style="margin-top:4px">상태 바꾸기</div><div class="pills" style="margin-bottom:12px">${STATUS.map(s=>`<button class="${t.status===s?'on':''}" data-act="setSt" data-v="${s}">${s}</button>`).join('')}</div>
+    ${assigned(t)?`<div class="lock">${esc(t.by)}님이 준 업무예요. 완료는 관리자 승인 후 처리돼요.</div>`:''}
+    ${S.d.admin && t.status==='검토 요청'?`<div class="appr"><h3>${esc(t.owner)}님이 완료를 보고했어요</h3><div class="acts"><button class="btn ghost" data-act="reject">반려 (다시 진행)</button><button class="btn sky" data-act="approve">승인 · 완료</button></div></div>`:''}
+    ${needAppr && !['검토 요청','완료'].includes(t.status)?`<button class="btn sky block" data-act="report" style="margin-bottom:12px">완료 보고하기 (승인 요청)</button>`:''}
+    ${edit?`<div class="sec-t" style="margin-top:4px">상태 바꾸기</div><div class="pills" style="margin-bottom:12px">${STATUS.filter(s=>!needAppr || !['완료','검토 요청'].includes(s)).map(s=>`<button class="${t.status===s?'on':''}" data-act="setSt" data-v="${s}">${stLabel(s)}</button>`).join('')}</div>
     <label class="f"><span>진행률 <b id="pgv">${Number(t.progress)||0}%</b></span><input type="range" min="0" max="100" step="10" value="${Number(t.progress)||0}" id="t_pg" style="width:100%" oninput="document.getElementById('pgv').textContent=this.value+'%'" onchange="saveProgress()"></label>`:''}
     <div class="sec-t">댓글 ${cm.length}</div>${cm.map(c=>`<div class="cmt"><b>${esc(c.who)}</b><span>${esc(c.at)}</span><p>${esc(c.text)}</p></div>`).join('')}
     <div style="display:flex;gap:8px"><input class="in" id="t_cm" placeholder="진행 상황 · 요청을 남겨요"><button class="btn sm" style="height:46px" data-act="addCm">등록</button></div>
-    ${edit?`<div class="acts" style="margin-top:14px"><button class="btn ghost" data-act="editTask">수정</button><button class="btn red" data-act="delTask">삭제</button></div>`:''}`);
+    ${edit && !needAppr?`<div class="acts" style="margin-top:14px"><button class="btn ghost" data-act="editTask">수정</button><button class="btn red" data-act="delTask">삭제</button></div>`:''}`);
     $('#dim').dataset.id = id; return;
   }
   S.taskEdit = false;
-  sheet(`<h3>${id?'업무 수정':'새 업무'}</h3>
+  sheet(`<h3>${id?'업무 수정':S.d.admin?'업무 주기':'내 업무 추가'}</h3>
   <label class="f"><span>업무 제목</span><input class="in" id="t_title" value="${esc(t.title||'')}" placeholder="예) 12월 겨울 신메뉴 포스터 제작"></label>
-  <div class="row2"><label class="f"><span>담당</span><select class="in" id="t_owner">${memOpts(t.owner)}</select></label><label class="f"><span>마감일</span><input class="in" type="date" id="t_due" value="${esc(t.due||'')}"></label></div>
+  <div class="row2">${S.d.admin?`<label class="f"><span>누구에게</span><select class="in" id="t_owner">${memOpts(t.owner)}</select></label>`:`<input type="hidden" id="t_owner" value="${esc(t.owner)}"><label class="f"><span>담당</span><input class="in" value="${esc(t.owner)}" disabled></label>`}<label class="f"><span>마감일</span><input class="in" type="date" id="t_due" value="${esc(t.due||'')}"></label></div>
   <div class="row2"><label class="f"><span>우선순위</span><select class="in" id="t_prio">${opt(['보통','높음','긴급'], t.prio)}</select></label><label class="f"><span>분류</span><input class="in" id="t_cat" list="cats" value="${esc(t.cat||'')}" placeholder="예) 마케팅"></label></div>
   <datalist id="cats">${['마케팅','가맹 영업','지원사업','디자인','매장 운영','오픈 준비','교육','정산'].map(c=>`<option value="${c}">`).join('')}</datalist>
   <label class="f"><span>설명</span><textarea class="in" id="t_desc" placeholder="무엇을, 어떤 결과물로, 누구에게 전달하는지">${esc(t.desc||'')}</textarea></label>
@@ -487,6 +594,7 @@ function memberEdit(name){
   sheet(`<h3>${name?esc(name):'팀원 추가'}</h3>
   ${name?'':'<label class="f"><span>이름</span><input class="in" id="m_name"></label>'}
   <div class="row2"><label class="f"><span>권한</span><select class="in" id="m_role">${opt(['직원','관리자'], m.role)}</select></label><label class="f"><span>직무</span><input class="in" id="m_job" value="${esc(m.job||'')}" placeholder="예) 가맹 영업"></label></div>
+  <label class="f"><span>재무 탭 권한 ${S.d.fin==='전체'?'':'(대표만 변경 가능)'}</span><select class="in" id="m_fin" ${S.d.fin==='전체'?'':'disabled'}>${opt([['없음','없음 · 재무 탭 안 보임'],['제한','제한 · 지출 + 로열티·식자재 수입 (승인 필요)'],['전체','전체 · 공사차익·순이익 + 승인 (대표)']], m.fin||'없음')}</select></label>
   <div class="row2"><label class="f"><span>색상</span><input class="in" type="color" id="m_color" value="${esc(m.color||'#1C8FD8')}" style="padding:4px"></label><label class="f"><span>상태</span><select class="in" id="m_active">${opt([['Y','활성'],['N','비활성']], m.active||'Y')}</select></label></div>
   <div class="acts">${name?'<button class="btn ghost" data-act="resetPin">PIN 초기화</button>':''}<button class="btn" data-act="saveMember">저장</button></div>`);
   $('#dim').dataset.id = name||'';
@@ -553,7 +661,20 @@ document.addEventListener('click', async e => {
     case 'delRoutine': remove('routines', dim.id); break;
     case 'members': membersSheet(); break;
     case 'editMember': memberEdit(ds.id||''); break;
-    case 'saveMember': { const name = dim.id || val('m_name'); if (!name) return toast('이름을 입력해 주세요'); await save('members', { name, role: val('m_role'), job: val('m_job'), color: val('m_color'), active: val('m_active'), order: dim.id ? mem(name).order : (S.d.members.length+1) }, '팀원 정보를 저장했어요'); break; }
+    case 'saveMember': { const name = dim.id || val('m_name'); if (!name) return toast('이름을 입력해 주세요'); const mo = { name, role: val('m_role'), job: val('m_job'), color: val('m_color'), active: val('m_active'), order: dim.id ? mem(name).order : (S.d.members.length+1) }; if (S.d.fin==='전체') mo.fin = val('m_fin'); await save('members', mo, '팀원 정보를 저장했어요'); break; }
+    case 'assign': S.taskEdit = true; taskSheet('', ds.v); break;
+    case 'report': case 'approve': case 'reject': { const id = dim.id; const st = a==='approve' ? '완료' : a==='reject' ? '진행 중' : '검토 요청'; const j = await api('upsert', { table:'tasks', obj:{ id, status: st } }); if (!j.ok) return toast(j.error); if (a==='reject') await api('comment', { id, text: '반려: 다시 진행해 주세요' }); closeSheet(); toast(a==='approve'?'승인했어요':a==='reject'?'반려했어요':'완료 보고했어요. 관리자 승인을 기다려요'); await load(); break; }
+    case 'finSeg': S.finSeg = ds.v; render(); break;
+    case 'finMove': { const [y,m] = S.finM.split('-').map(Number); const d = new Date(y, m-1+Number(ds.v), 1); S.finM = d.getFullYear()+'-'+pad(d.getMonth()+1); render(); break; }
+    case 'finNew': finSheet('', ds.v); break;
+    case 'finOpen': finSheet(ds.id); break;
+    case 'finSave': { const kind = dim.kind; const cat = pillVal('f_cat'); const o = { id: dim.id||'', month: (S.d.finance||[]).find(x=>x.id===dim.id)?.month || S.finM, kind, cat, sub: cat==='공사차익'?pillVal('f_sub'):'', branch: val('f_branch'), title: val('f_title'), amount: numVal('f_amount'), cost: cat==='공사차익'?numVal('f_cost'):'', vat: pillVal('f_vat'), due: val('f_due'), memo: val('f_memo') };
+      if (!o.amount) return toast('금액을 입력해 주세요'); if (kind==='지출' && !o.title) return toast('무엇에 쓰는 돈인지 적어 주세요'); if (kind==='수입' && !o.branch) return toast('지점을 입력해 주세요');
+      await save('finance', o, S.d.fin==='전체'?'저장했어요':'저장했어요. 대표 승인을 기다려요'); break; }
+    case 'finDel': remove('finance', dim.id); break;
+    case 'finDone': { const f = S.d.finance.find(x=>x.id===ds.id); const done = f.done!=='Y'; el.classList.toggle('on', done); el.innerHTML = done?I.check:''; const j = await api('finCheck', { id: ds.id, done }); if (!j.ok) { toast(j.error); render(); return; } const i = S.d.finance.findIndex(x=>x.id===ds.id); S.d.finance[i] = j.obj; render(); toast(f.kind==='지출'?(done?'지급 완료':'지급 전으로'):(done?'받음 확인':'안 받음으로')); break; }
+    case 'finAppr': { const j = await api('finApprove', { id: dim.id, ok: ds.v==='1' }); if (!j.ok) return toast(j.error); closeSheet(); toast(ds.v==='1'?'승인했어요':'반려했어요'); await load(); break; }
+    case 'finCopy': { const [y,m] = S.finM.split('-').map(Number); const pd = new Date(y, m-2, 1); const pm = pd.getFullYear()+'-'+pad(pd.getMonth()+1); const prev = (S.d.finance||[]).filter(f=>f.month===pm && f.kind==='지출' && f.status!=='반려'); if (!prev.length) return toast('지난달 지출이 없어요'); if (!confirm('지난달 지출 '+prev.length+'건을 이번 달로 복사할까요? (지급 전 상태)')) return; for (const f of prev) { await api('upsert', { table:'finance', obj:{ month:S.finM, kind:'지출', cat:f.cat, branch:f.branch, title:f.title, amount:f.amount, vat:f.vat, due: f.due ? S.finM + f.due.slice(7) : '', memo:f.memo } }); } toast(prev.length+'건을 불러왔어요'); await load(); break; }
     case 'resetPin': { if (!confirm(dim.id+'님의 PIN을 초기화할까요? 다음 로그인 때 새 PIN을 정합니다.')) return; const j = await api('resetPin', { target: dim.id }); toast(j.ok?'PIN을 초기화했어요':j.error); break; }
     case 'settings': settingsSheet(); break;
     case 'saveSettings': { const hol = val('s_hol').split(/\s+/).filter(Boolean); const body = { holidays: hol }; if (val('s_sales')) body.salesSheetUrl = val('s_sales'); const j = await api('settings', body); if (!j.ok) return toast(j.error); closeSheet(); toast('설정을 저장했어요'); load(); break; }
@@ -583,7 +704,18 @@ let DB = null;
 function demoSeed(){
   const t = ymd(new Date()); const wk = monday(t);
   const R = [['배한나','출근 청소','청소','weekly','1,3,5','','11:00','테이블·바닥·쓰레기·소모품 확인, 완료 사진 공유','N'],['배한나','네이버 순위 체크·기록','네이버','daily','','','11:30','모바일 네이버 지도 키워드 순위 기록, 리뷰 확인','N'],['배한나','인스타그램 업로드','인스타그램','daily','','','12:00','요일별 주제(월 메뉴·화 매장·수 이벤트·목 릴스·금 주말 예고)','N'],['배한나','지원사업 공고 찾기','지원사업','weekly','1','','13:00','기업마당·K-Startup·소상공인24 등 신규 공고 확인','N'],['배한나','지원사업 서류 준비','지원사업','weekly','3','','13:00','사업계획서 초안·증빙 서류 준비, 제출은 대표 승인 후','N'],['배한나','스마트플레이스 포스터 교체','네이버','weekly','2','','13:00','계정·업체명 확인 → 대표 이미지 교체 → 모바일 확인','N'],['배한나','메타 광고 성과 점검','메타 광고','weekly','2','','14:30','노출·클릭·문의 수·광고비 기록','N'],['배한나','AI 영상 기획·생성','AI 영상','weekly','4','','13:00','주제·참조 소스·프롬프트 → 3~5개 생성','N'],['배한나','AI 영상 편집·업로드','AI 영상','weekly','5','','13:00','15~30초 편집, 자막·로고, 검수 후 업로드','N'],['배한나','주말 인스타 예약','인스타그램','weekly','5','','15:00','토·일 게시물 예약 업로드','N'],['배한나','주간 보고 제출','보고','weekly','5','','15:30','보고 탭에서 이번 주 보고 작성','N'],['배한나','블로그 체험단 팀 수 조사','블로그','monthly','','5','11:30','전 지점 단톡방에 이번 달 운영 팀 수 확인','Y'],['배한나','블로그 선정 인원 송부','블로그','monthly','','19','11:30','지점별 선정 명단 송부','Y'],['박하운','배한나 용역대금 지급 (3.3% 공제)','정산','monthly','','10','11:00','전월 1일~말일분','Y']];
-  DB = { members:[{name:'박하운',role:'관리자',job:'대표',color:'#0B3B75',active:'Y',order:1},{name:'염찬웅',role:'관리자',job:'가맹 영업',color:'#1C8FD8',active:'Y',order:2},{name:'배한나',role:'직원',job:'마케팅 디렉터',color:'#E0732F',active:'Y',order:3},{name:'한얼',role:'직원',job:'가맹 영업',color:'#2E9E6B',active:'Y',order:4},{name:'유경웅',role:'직원',job:'가맹 영업',color:'#8A55C9',active:'Y',order:5}],
+  const M = t.slice(0,7);
+  DB = { members:[{name:'박하운',role:'관리자',job:'대표',color:'#0B3B75',active:'Y',order:1,fin:'전체'},{name:'염찬웅',role:'관리자',job:'가맹 영업',color:'#1C8FD8',active:'Y',order:2,fin:'제한'},{name:'배한나',role:'직원',job:'마케팅 디렉터',color:'#E0732F',active:'Y',order:3,fin:'없음'},{name:'한얼',role:'직원',job:'가맹 영업',color:'#2E9E6B',active:'Y',order:4,fin:'제한'},{name:'유경웅',role:'직원',job:'가맹 영업',color:'#8A55C9',active:'Y',order:5,fin:'없음'}],
+    finance: [
+      { id:'F1', month:M, kind:'지출', cat:'임대료·관리비', branch:'건물주', title:'본사 사무실 월세 (예시)', amount:'1100000', vat:'포함', due:M+'-05', done:'Y', by:'박하운', status:'승인', approver:'박하운' },
+      { id:'F2', month:M, kind:'지출', cat:'인건비', branch:'배한나', title:'마케터 용역대금 (3.3% 공제 전, 예시)', amount:'1000000', vat:'없음', due:M+'-10', done:'N', by:'박하운', status:'승인', approver:'박하운' },
+      { id:'F3', month:M, kind:'지출', cat:'광고·마케팅', branch:'메타', title:'가맹모집 광고비 2주 (예시)', amount:'600000', vat:'별도', due:M+'-15', done:'N', by:'한얼', status:'대기' },
+      { id:'F4', month:M, kind:'지출', cat:'소모품·비품', branch:'쿠팡', title:'사무실 휴지·세제 (예시)', amount:'48000', vat:'포함', due:'', done:'Y', by:'염찬웅', status:'승인', approver:'박하운' },
+      { id:'F5', month:M, kind:'수입', cat:'로열티', branch:'동명점', title:M.slice(5)+'월 로열티 (예시)', amount:'330000', vat:'포함', due:M+'-10', done:'Y', by:'한얼', status:'승인', approver:'박하운' },
+      { id:'F6', month:M, kind:'수입', cat:'로열티', branch:'풍암점', title:M.slice(5)+'월 로열티 (예시)', amount:'330000', vat:'포함', due:M+'-10', done:'N', by:'한얼', status:'대기' },
+      { id:'F7', month:M, kind:'수입', cat:'식자재', branch:'동명점', title:'식자재 공급 대금 (예시)', amount:'2420000', vat:'포함', due:M+'-20', done:'N', by:'염찬웅', status:'승인', approver:'박하운' },
+      { id:'F8', month:M, kind:'수입', cat:'공사차익', sub:'인테리어', branch:'풍암점', title:'인테리어 공사 (예시)', amount:'33000000', cost:'26400000', vat:'포함', due:M+'-25', done:'N', by:'박하운', status:'승인', approver:'박하운' },
+      { id:'F9', month:M, kind:'수입', cat:'공사차익', sub:'간판', branch:'풍암점', title:'간판 (예시)', amount:'4400000', cost:'3300000', vat:'포함', due:M+'-25', done:'N', by:'박하운', status:'승인', approver:'박하운' } ],
     routines: R.map((r,i)=>({ id:'R'+pad(i+1), owner:r[0], title:r[1], cat:r[2], repeat:r[3], days:r[4], dom:r[5], time:r[6], desc:r[7], shift:r[8], active:'Y', order:i+1 })),
     checks: [], tasks: [
       { id:'T1', title:'12월 겨울 신메뉴 포스터 제작', owner:'배한나', by:'박하운', cat:'디자인', start:t, due:addD(t,3), status:'진행 중', prio:'높음', progress:'40', desc:'전 지점 스마트플레이스·매장 부착용. 실제 메뉴 사진 사용.', comments:JSON.stringify([{who:'박하운',at:t+' 10:12',text:'고깃집된장술밥 사진 원본으로 써주세요'},{who:'배한나',at:t+' 13:40',text:'시안 2개 만들고 있어요'}]), created:t, updated:t+' 13:40' },
@@ -608,9 +740,14 @@ function demoApi(action, b){
   switch (action) {
     case 'meta': return { ok:true, members: DB.members.filter(m=>m.active!=='N') };
     case 'login': return /^\d{4,8}$/.test(b.pin||'') ? { ok:true, name:b.name, token:'demo', role:(DB.members.find(m=>m.name===b.name)||{}).role } : { ok:false, error:'PIN은 숫자 4~8자리예요' };
-    case 'all': return { ok:true, ...JSON.parse(JSON.stringify(DB)), me, admin, today: ymd(new Date()), salesAppUrl: SALES_APP, sheetUrl: admin?'https://docs.google.com/':'', ver:'1' };
+    case 'all': { const fin = (DB.members.find(m=>m.name===me)||{}).fin||'없음'; const vis = f => fin==='전체' || (fin==='제한' && (f.kind==='지출' || ['로열티','식자재'].includes(f.cat)));
+      return { ok:true, ...JSON.parse(JSON.stringify(DB)), finance: DB.finance.filter(vis).map(x=>({...x})), fin, me, admin, today: ymd(new Date()), salesAppUrl: SALES_APP, sheetUrl: admin?'https://docs.google.com/':'', ver:'1' }; }
+    case 'finCheck': { const f = DB.finance.find(x=>x.id===b.id); f.done = b.done?'Y':'N'; return { ok:true, obj:{...f} }; }
+    case 'finApprove': { const f = DB.finance.find(x=>x.id===b.id); f.status = b.ok?'승인':'반려'; f.approver = me; return { ok:true, obj:{...f} }; }
     case 'upsert': { const k = key[b.table]||'id'; const arr = DB[b.table]; const o = b.obj; if (!o[k]) o[k] = 'X'+Date.now(); const i = arr.findIndex(x=>x[k]===o[k]); const cur = i>=0?arr[i]:{};
-      const m = { ...cur, ...o }; if (b.table==='tasks') { if (i<0) { m.by = me; m.created = now(); m.status = m.status||'할 일'; m.comments='[]'; m.progress = m.progress||'0'; } m.updated = now(); if (m.status==='완료') m.progress='100'; }
+      const m = { ...cur, ...o }; if (b.table==='finance') { const fin = (DB.members.find(x=>x.name===me)||{}).fin; if (i<0) { m.by = me; m.done='N'; } m.status = fin==='전체'?'승인':'대기'; m.amount = String(m.amount); m.cost = String(m.cost||''); }
+      if (b.table==='tasks' && i>=0 && o.status==='완료' && !admin && cur.by && cur.by!==me) m.status = '검토 요청';
+      if (b.table==='tasks') { if (i<0) { m.by = me; m.created = now(); m.status = m.status||'할 일'; m.comments='[]'; m.progress = m.progress||'0'; } m.updated = now(); if (m.status==='완료') m.progress='100'; }
       if (b.table==='events' && i<0) m.by = me; if (b.table==='notices' && i<0) { m.by = me; m.at = now(); } if (b.table==='reports' && o.body!==undefined) m.submitted = now();
       if (i>=0) arr[i] = m; else arr.push(m); return { ok:true, obj:m }; }
     case 'remove': { const arr = DB[b.table]; const i = arr.findIndex(x=>x.id===b.id); if (i>=0) arr.splice(i,1); return { ok:true }; }
