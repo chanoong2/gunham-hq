@@ -156,6 +156,12 @@ textarea.in{height:auto;min-height:84px;padding:10px 12px;resize:vertical;line-h
 .won{position:relative}.won input{padding-right:34px;font-size:18px;font-weight:800}.won:after{content:'원';position:absolute;right:13px;top:12px;color:var(--sub);font-weight:700}
 .appr{border:2px solid var(--gold);background:#FFFBEF;border-radius:14px;padding:12px 14px;margin-bottom:12px}.appr h3{font-size:16px;font-weight:800;margin-bottom:6px}
 .appr .ar{display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid #F3E7C4}.appr .ar:last-child{border-bottom:0}.appr .ar .tx{flex:1;min-width:0;font-size:14px}.appr .ar .tx b{display:block}.appr .ar .tx span{font-size:12px;color:var(--sub)}
+.mt{width:100%;border-collapse:collapse;font-size:13.5px}.mt th{text-align:left;color:var(--sub);font-size:12px;font-weight:700;padding:6px 4px;border-bottom:1px solid var(--line)}.mt td{padding:8px 4px;border-bottom:1px solid #EEF4FA}.mt small{color:var(--sub)}
+.mbox{border:1px solid var(--line);border-radius:14px;padding:11px 12px;margin-bottom:10px}.mh2{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.mh2 b{font-size:16px}
+.mrow{display:flex;align-items:center;gap:9px;padding:8px 0;border-bottom:1px solid #EEF4FA}.mx{flex:1;min-width:0}.mx small{font-size:12px;color:var(--sub)}.mbar{height:8px;background:#DDF3E8;border-radius:5px;overflow:hidden;margin-bottom:3px}.mbar i{display:block;height:100%;background:#9FC8E8}
+.mr{text-align:right;white-space:nowrap}.mr b{display:block;font-size:14.5px}.mr span{font-size:12.5px;font-weight:800}.c-green{color:var(--green)}.c-gold{color:#B57A00}.c-red{color:var(--red)}
+.msum{display:flex;justify-content:space-between;align-items:center;padding-top:8px;font-size:13px;color:var(--sub)}.msum b{font-size:16px;color:var(--ink)}
+.crow{border:1px solid var(--line);border-radius:12px;padding:10px 11px;margin-bottom:9px}.ct{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.ct b{font-size:15.5px}
 .lock{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--sub);background:#F4F8FC;border-radius:10px;padding:8px 11px;margin-bottom:12px}
 .ptitle{display:none;font-size:24px;font-weight:800;letter-spacing:-.6px;margin-bottom:16px}
 </style>
@@ -446,9 +452,10 @@ function viewFin(){
   const row = f => { const c = vatCalc(f.amount,f.vat); const d = f.done==='Y'; const isCon = f.cat==='공사차익';
     return `<div class="frow ${d?'done':''}"><button class="chk ${d?'on':''}" data-act="finDone" data-id="${esc(f.id)}" aria-label="${f.kind==='지출'?'지급 완료':'받음'}">${d?I.check:''}</button>
     <div class="tx" data-act="finOpen" data-id="${esc(f.id)}"><b>${esc(f.kind==='수입' ? (f.branch||'지점 미입력') + (isCon?' · '+f.sub:'') : f.title)}</b><span>${[f.kind==='지출'?f.branch:f.title, f.due?mdShort(f.due):'', '부가세 '+f.vat, f.by].filter(Boolean).map(esc).join(' · ')}</span> ${stF(f)}</div>
-    <div class="amt" data-act="finOpen" data-id="${esc(f.id)}">${isCon? won(finProfit(f)) : won(c.total)}<small>${isCon?'차익 (공사비 '+won(vatCalc(f.amount,f.vat).total)+')' : d?(f.kind==='지출'?'지급 완료':'받음'):(f.kind==='지출'?'지급 전':'안 받음')}</small></div></div>`; };
+    <div class="amt" data-act="finOpen" data-id="${esc(f.id)}">${isCon? won(finProfit(f)) : won(c.total)}<small>${isCon?'차익 · 마진율 '+mRate(vatCalc(f.amount,f.vat).supply, vatCalc(f.cost,f.vat).supply)+'%' : d?(f.kind==='지출'?'지급 완료':'받음'):(f.kind==='지출'?'지급 전':'안 받음')}</small></div></div>`; };
   let body = '';
-  if (S.finSeg==='out') {
+  if (S.finSeg==='margin' && full) body = marginBody();
+  else if (S.finSeg==='out') {
     const groups = EXP_CATS.concat(['기타']).filter((c,i,a)=>a.indexOf(c)===i).map(c=>[c, outs.filter(f=>(EXP_CATS.includes(f.cat)?f.cat:'기타')===c)]).filter(g=>g[1].length);
     body = `<div class="card"><div class="ch"><h3>${m}월 지출 목록</h3><span class="chip">${outs.length}건</span></div>
     <button class="btn sky block" data-act="finNew" data-v="지출">+ 지출 추가</button>
@@ -463,11 +470,49 @@ function viewFin(){
   }
   return `<div class="ptitle">재무</div>
   <div class="card" style="display:flex;align-items:center;justify-content:space-between"><button class="btn sm ghost" data-act="finMove" data-v="-1">‹ 지난달</button><b style="font-size:18px">${y}년 ${m}월</b><button class="btn sm ghost" data-act="finMove" data-v="1">다음달 ›</button></div>
-  ${full? approvalCard() : `<div class="lock">쓴 내용은 대표 승인 후 확정돼요. 지출과 로열티·식자재 수입만 쓸 수 있어요.</div>`}
+  ${full? approvalCard() : `<div class="lock">쓴 내용은 관리자 승인 후 확정돼요. 지출과 로열티·식자재 수입만 쓸 수 있어요.</div>`}
   ${sum}
-  <div class="seg"><button class="${S.finSeg==='out'?'on':''}" data-act="finSeg" data-v="out">지출</button><button class="${S.finSeg==='in'?'on':''}" data-act="finSeg" data-v="in">수입</button></div>
+  <div class="seg"><button class="${S.finSeg==='out'?'on':''}" data-act="finSeg" data-v="out">지출</button><button class="${S.finSeg==='in'?'on':''}" data-act="finSeg" data-v="in">수입</button>${full?`<button class="${S.finSeg==='margin'?'on':''}" data-act="finSeg" data-v="margin">공사 마진</button>`:''}</div>
   <div class="pc2"><div>${body}</div><div class="card"><div class="ch"><h3>이렇게 쓰세요</h3></div><p style="font-size:14px;line-height:1.8;color:var(--sub)">① <b>+ 추가</b>로 항목을 적어요 (금액과 부가세 포함 여부)<br>② 동그라미를 누르면 <b>지급 완료 / 받음</b>으로 바뀌어요<br>③ 합계·부가세·남은 돈은 자동 계산돼요${full?'<br>④ 직원이 쓴 항목은 <b>승인</b>해야 확정돼요':''}</p></div></div>`;
 }
+/* ---- 공사 마진 (재무 전체 권한만) ---- */
+const mRate = (rev, cost) => rev>0 ? Math.round((rev-cost)/rev*1000)/10 : 0;
+const rateCls = r => r>=20 ? 'green' : r>=10 ? 'gold' : 'red';
+const rateChip = r => `<span class="chip ${rateCls(r)}">마진율 ${r}%</span>`;
+function marginBody(){
+  const all = (S.d.finance||[]).filter(f=>f.cat==='공사차익' && f.status!=='반려' && (S.mScope==='all' || f.month===S.finM));
+  const rc = f => ({ rev: vatCalc(f.amount,f.vat).supply, cost: vatCalc(f.cost,f.vat).supply });
+  const tot = all.reduce((a,f)=>{ const x = rc(f); a.rev+=x.rev; a.cost+=x.cost; return a; }, {rev:0,cost:0});
+  const branches = [...new Set(all.map(f=>f.branch||'지점 미입력'))];
+  const bySub = CON_SUBS.map(s=>{ const g = all.filter(f=>f.sub===s); const t = g.reduce((a,f)=>{ const x = rc(f); a.rev+=x.rev; a.cost+=x.cost; return a; }, {rev:0,cost:0}); return [s, g.length, t]; });
+  return `<div class="card"><div class="ch"><h3>공사 마진 확인</h3><span class="chip">관리자 전용</span></div>
+  <div class="seg" style="margin-bottom:10px"><button class="${S.mScope!=='all'?'on':''}" data-act="mScope" data-v="month">이번 달</button><button class="${S.mScope==='all'?'on':''}" data-act="mScope" data-v="all">전체 기간</button></div>
+  <button class="btn sky block" data-act="conNew">+ 지점 공사 입력 (인테리어·간판·의탁자·소품)</button>
+  <div class="tot" style="margin-top:12px"><div><span>받는 공사비 (공급가)</span><b>${won(tot.rev)}</b></div><div><span>원가 (공급가)</span><b>${won(tot.cost)}</b></div><div><span>원가율</span><b>${tot.rev? Math.round(tot.cost/tot.rev*1000)/10 : 0}%</b></div><div class="big"><span>공사차익 ${tot.rev?rateChip(mRate(tot.rev,tot.cost)):''}</span><b>${won(tot.rev-tot.cost)}</b></div></div>
+  <div class="sec-t">항목별 마진율</div>
+  <table class="mt"><tr><th>항목</th><th>청구</th><th>원가</th><th>마진율</th></tr>${bySub.map(([s,n,t])=>`<tr><td><b>${s}</b> <small>${n}건</small></td><td>${n?won(t.rev):'-'}</td><td>${n?won(t.cost):'-'}</td><td>${n?`<span class="chip ${rateCls(mRate(t.rev,t.cost))}">${mRate(t.rev,t.cost)}%</span>`:'-'}</td></tr>`).join('')}</table>
+  <div class="sec-t">지점별</div>
+  ${branches.length? branches.map(b=>{ const g = all.filter(f=>(f.branch||'지점 미입력')===b); const t = g.reduce((a,f)=>{ const x = rc(f); a.rev+=x.rev; a.cost+=x.cost; return a; }, {rev:0,cost:0});
+    return `<div class="mbox"><div class="mh2"><b>${esc(b)}</b>${rateChip(mRate(t.rev,t.cost))}</div>
+    ${g.map(f=>{ const x = rc(f); const r = mRate(x.rev,x.cost); return `<div class="mrow" data-act="finOpen" data-id="${esc(f.id)}"><span class="cat">${esc(f.sub)}</span><div class="mx"><div class="mbar"><i style="width:${Math.min(100,Math.max(0,x.rev?x.cost/x.rev*100:0))}%"></i></div><small>청구 ${won(x.rev)} · 원가 ${won(x.cost)}${S.mScope==='all'?' · '+esc(f.month):''}</small></div><div class="mr"><b>${won(x.rev-x.cost)}</b><span class="c-${rateCls(r)}">${r}%</span></div></div>`; }).join('')}
+    <div class="msum"><span>합계 · 청구 ${won(t.rev)} / 원가 ${won(t.cost)}</span><b>${won(t.rev-t.cost)}</b></div></div>`; }).join('')
+   : '<div class="empty">아직 공사 내역이 없어요<br>위 버튼으로 지점 공사를 입력해 주세요</div>'}
+  <p class="cap2" style="margin-top:8px">마진율 = (받는 공사비 − 원가) ÷ 받는 공사비, 부가세 뺀 공급가 기준. 막대는 원가 비중이에요. 초록 20% 이상 · 노랑 10~20% · 빨강 10% 미만.</p></div>`;
+}
+function conSheet(){
+  sheet(`<h3>지점 공사 입력 <span style="font-size:14px;color:var(--sub);font-weight:600">${esc(S.finM)}</span></h3>
+  <label class="f"><span>지점 (가맹점)</span><input class="in" id="c_branch" placeholder="예) 풍암점"></label>
+  <label class="f"><span>입력하는 금액은</span><div class="pills" id="c_vat">${[['포함','부가세 포함'],['별도','부가세 별도'],['없음','부가세 없음']].map((v,i)=>`<button type="button" class="${i===0?'on':''}" data-v="${v[0]}" onclick="this.parentNode.querySelectorAll('button').forEach(x=>x.classList.remove('on'));this.classList.add('on');conCalc()">${v[1]}</button>`).join('')}</div></label>
+  ${CON_SUBS.map((s,i)=>`<div class="crow"><div class="ct"><b>${s}</b><span id="c_r${i}" class="chip">-</span></div><div class="row2"><label class="f" style="margin:0"><span>받는 공사비</span><div class="won"><input class="in" id="c_a${i}" inputmode="numeric" oninput="fmtWon(this);conCalc()"></div></label><label class="f" style="margin:0"><span>업체 원가</span><div class="won"><input class="in" id="c_c${i}" inputmode="numeric" oninput="fmtWon(this);conCalc()"></div></label></div></div>`).join('')}
+  <div class="calc" id="c_tot" style="margin-top:12px"></div>
+  <label class="f"><span>메모</span><input class="in" id="c_memo" placeholder="예) 25평, 11/20 착공"></label>
+  <button class="btn block" data-act="conSave">저장</button>`);
+  conCalc();
+}
+function conCalc(){ const v = pillVal('c_vat'); let R=0, C=0;
+  CON_SUBS.forEach((s,i)=>{ const a = vatCalc(numVal('c_a'+i), v).supply, c = vatCalc(numVal('c_c'+i), v).supply; R+=a; C+=c; const el = $('#c_r'+i); if (!el) return; if (a>0) { const r = mRate(a,c); el.className = 'chip '+rateCls(r); el.textContent = '차익 '+won(a-c)+' · '+r+'%'; } else { el.className='chip'; el.textContent='-'; } });
+  const t = $('#c_tot'); if (t) t.innerHTML = R? `청구 ${won(R)} − 원가 ${won(C)} (공급가)<br>공사차익 <b>${won(R-C)}</b> · 마진율 <b>${mRate(R,C)}%</b>` : '금액을 넣으면 항목별 마진율이 바로 계산돼요'; }
+
 function finSheet(id, kind){
   const full = S.d.fin==='전체';
   const f = id ? (S.d.finance||[]).find(x=>x.id===id) : { kind, cat: kind==='지출'?'기타':'로열티', sub:'인테리어', vat:'포함', month:S.finM };
@@ -487,7 +532,7 @@ function finSheet(id, kind){
   <label class="f"><span>부가세</span><div class="pills" id="f_vat">${[['포함','부가세 포함'],['별도','부가세 별도 (+10%)'],['없음','부가세 없음']].map(v=>`<button type="button" class="${f.vat===v[0]?'on':''}" data-v="${v[0]}" ${dis} onclick="pickPill(this)">${v[1]}</button>`).join('')}</div></label>
   <div class="calc" id="f_calc"></div>
   <div class="row2"><label class="f"><span>${f.kind==='지출'?'지급 예정일':'받을 날'}</span><input class="in" type="date" id="f_due" value="${esc(f.due||'')}" ${dis}></label><label class="f"><span>메모</span><input class="in" id="f_memo" value="${esc(f.memo||'')}" ${dis}></label></div>
-  ${canEdit?`<div class="acts">${id?'<button class="btn red" data-act="finDel">삭제</button>':''}<button class="btn" data-act="finSave">${id?'저장':full?'등록':'등록 (승인 요청)'}</button></div>`:'<p style="font-size:13px;color:var(--sub)">승인된 항목은 대표만 고칠 수 있어요.</p>'}`);
+  ${canEdit?`<div class="acts">${id?'<button class="btn red" data-act="finDel">삭제</button>':''}<button class="btn" data-act="finSave">${id?'저장':full?'등록':'등록 (승인 요청)'}</button></div>`:'<p style="font-size:13px;color:var(--sub)">승인된 항목은 관리자만 고칠 수 있어요.</p>'}`);
   $('#dim').dataset.id = id||''; $('#dim').dataset.kind = f.kind; finCalc();
 }
 function pickPill(b){ b.parentNode.querySelectorAll('button').forEach(x=>x.classList.remove('on')); b.classList.add('on'); if (b.parentNode.id==='f_cat') { const con = b.dataset.v==='공사차익'; $('#f_subw').classList.toggle('hide',!con); $('#f_costw').classList.toggle('hide',!con); if ($('#dim').dataset.kind==='수입') $('#f_amtL').textContent = con?'가맹점에서 받는 공사비':'받을 금액'; } finCalc(); }
@@ -495,7 +540,7 @@ const pillVal = id => ($('#'+id+' button.on')||{}).dataset?.v || '';
 const numVal = id => Number(String($('#'+id)?.value||'').replace(/[^\d]/g,''))||0;
 function fmtWon(el){ const n = String(el.value).replace(/[^\d]/g,''); el.value = n ? Number(n).toLocaleString('ko-KR') : ''; }
 function finCalc(){ const el = $('#f_calc'); if (!el) return; const v = pillVal('f_vat'); const c = vatCalc(numVal('f_amount'), v);
-  if (pillVal('f_cat')==='공사차익') { const k = vatCalc(numVal('f_cost'), v); el.innerHTML = `받는 공사비 공급가 ${won(c.supply)} − 원가 공급가 ${won(k.supply)}<br>공사차익 <b>${won(c.supply-k.supply)}</b> <span style="color:var(--sub)">(부가세 별도 계산)</span>`; }
+  if (pillVal('f_cat')==='공사차익') { const k = vatCalc(numVal('f_cost'), v); el.innerHTML = `받는 공사비 공급가 ${won(c.supply)} − 원가 공급가 ${won(k.supply)}<br>공사차익 <b>${won(c.supply-k.supply)}</b> · 마진율 <b>${mRate(c.supply,k.supply)}%</b> · 원가율 ${c.supply?Math.round(k.supply/c.supply*1000)/10:0}%`; }
   else el.innerHTML = `공급가 ${won(c.supply)} + 부가세 ${won(c.vat)}<br>합계 <b>${won(c.total)}</b>`; }
 
 const VIEWS = { home: viewHome, cal: viewCal, task: viewTask, rep: viewRep, fin: viewFin, admin: viewAdmin };
@@ -594,7 +639,7 @@ function memberEdit(name){
   sheet(`<h3>${name?esc(name):'팀원 추가'}</h3>
   ${name?'':'<label class="f"><span>이름</span><input class="in" id="m_name"></label>'}
   <div class="row2"><label class="f"><span>권한</span><select class="in" id="m_role">${opt(['직원','관리자'], m.role)}</select></label><label class="f"><span>직무</span><input class="in" id="m_job" value="${esc(m.job||'')}" placeholder="예) 가맹 영업"></label></div>
-  <label class="f"><span>재무 탭 권한 ${S.d.fin==='전체'?'':'(대표만 변경 가능)'}</span><select class="in" id="m_fin" ${S.d.fin==='전체'?'':'disabled'}>${opt([['없음','없음 · 재무 탭 안 보임'],['제한','제한 · 지출 + 로열티·식자재 수입 (승인 필요)'],['전체','전체 · 공사차익·순이익 + 승인 (대표)']], m.fin||'없음')}</select></label>
+  <label class="f"><span>재무 탭 권한 ${S.d.fin==='전체'?'':'(관리자만 변경 가능)'}</span><select class="in" id="m_fin" ${S.d.fin==='전체'?'':'disabled'}>${opt([['없음','없음 · 재무 탭 안 보임'],['제한','제한 · 지출 + 로열티·식자재 수입 (승인 필요)'],['전체','전체 · 공사차익·마진율·순이익 + 승인 (관리)']], m.fin||'없음')}</select></label>
   <div class="row2"><label class="f"><span>색상</span><input class="in" type="color" id="m_color" value="${esc(m.color||'#1C8FD8')}" style="padding:4px"></label><label class="f"><span>상태</span><select class="in" id="m_active">${opt([['Y','활성'],['N','비활성']], m.active||'Y')}</select></label></div>
   <div class="acts">${name?'<button class="btn ghost" data-act="resetPin">PIN 초기화</button>':''}<button class="btn" data-act="saveMember">저장</button></div>`);
   $('#dim').dataset.id = name||'';
@@ -665,12 +710,18 @@ document.addEventListener('click', async e => {
     case 'assign': S.taskEdit = true; taskSheet('', ds.v); break;
     case 'report': case 'approve': case 'reject': { const id = dim.id; const st = a==='approve' ? '완료' : a==='reject' ? '진행 중' : '검토 요청'; const j = await api('upsert', { table:'tasks', obj:{ id, status: st } }); if (!j.ok) return toast(j.error); if (a==='reject') await api('comment', { id, text: '반려: 다시 진행해 주세요' }); closeSheet(); toast(a==='approve'?'승인했어요':a==='reject'?'반려했어요':'완료 보고했어요. 관리자 승인을 기다려요'); await load(); break; }
     case 'finSeg': S.finSeg = ds.v; render(); break;
+    case 'mScope': S.mScope = ds.v; render(); break;
+    case 'conNew': conSheet(); break;
+    case 'conSave': { const br = val('c_branch'); if (!br) return toast('지점을 입력해 주세요'); const v = pillVal('c_vat'); const rows = CON_SUBS.map((s,i)=>({ s, a: numVal('c_a'+i), c: numVal('c_c'+i) })).filter(r=>r.a>0);
+      if (!rows.length) return toast('받는 공사비를 하나 이상 입력해 주세요'); el.disabled = true; el.textContent = '저장 중…';
+      for (const r of rows) { const j = await api('upsert', { table:'finance', obj:{ month:S.finM, kind:'수입', cat:'공사차익', sub:r.s, branch:br, title:br+' '+r.s+' 공사', amount:r.a, cost:r.c, vat:v, memo: val('c_memo') } }); if (!j.ok) { toast(j.error); el.disabled=false; el.textContent='저장'; return; } }
+      closeSheet(); toast(rows.length+'개 항목을 저장했어요'); await load(); break; }
     case 'finMove': { const [y,m] = S.finM.split('-').map(Number); const d = new Date(y, m-1+Number(ds.v), 1); S.finM = d.getFullYear()+'-'+pad(d.getMonth()+1); render(); break; }
     case 'finNew': finSheet('', ds.v); break;
     case 'finOpen': finSheet(ds.id); break;
     case 'finSave': { const kind = dim.kind; const cat = pillVal('f_cat'); const o = { id: dim.id||'', month: (S.d.finance||[]).find(x=>x.id===dim.id)?.month || S.finM, kind, cat, sub: cat==='공사차익'?pillVal('f_sub'):'', branch: val('f_branch'), title: val('f_title'), amount: numVal('f_amount'), cost: cat==='공사차익'?numVal('f_cost'):'', vat: pillVal('f_vat'), due: val('f_due'), memo: val('f_memo') };
       if (!o.amount) return toast('금액을 입력해 주세요'); if (kind==='지출' && !o.title) return toast('무엇에 쓰는 돈인지 적어 주세요'); if (kind==='수입' && !o.branch) return toast('지점을 입력해 주세요');
-      await save('finance', o, S.d.fin==='전체'?'저장했어요':'저장했어요. 대표 승인을 기다려요'); break; }
+      await save('finance', o, S.d.fin==='전체'?'저장했어요':'저장했어요. 관리자 승인을 기다려요'); break; }
     case 'finDel': remove('finance', dim.id); break;
     case 'finDone': { const f = S.d.finance.find(x=>x.id===ds.id); const done = f.done!=='Y'; el.classList.toggle('on', done); el.innerHTML = done?I.check:''; const j = await api('finCheck', { id: ds.id, done }); if (!j.ok) { toast(j.error); render(); return; } const i = S.d.finance.findIndex(x=>x.id===ds.id); S.d.finance[i] = j.obj; render(); toast(f.kind==='지출'?(done?'지급 완료':'지급 전으로'):(done?'받음 확인':'안 받음으로')); break; }
     case 'finAppr': { const j = await api('finApprove', { id: dim.id, ok: ds.v==='1' }); if (!j.ok) return toast(j.error); closeSheet(); toast(ds.v==='1'?'승인했어요':'반려했어요'); await load(); break; }
@@ -705,7 +756,7 @@ function demoSeed(){
   const t = ymd(new Date()); const wk = monday(t);
   const R = [['배한나','출근 청소','청소','weekly','1,3,5','','11:00','테이블·바닥·쓰레기·소모품 확인, 완료 사진 공유','N'],['배한나','네이버 순위 체크·기록','네이버','daily','','','11:30','모바일 네이버 지도 키워드 순위 기록, 리뷰 확인','N'],['배한나','인스타그램 업로드','인스타그램','daily','','','12:00','요일별 주제(월 메뉴·화 매장·수 이벤트·목 릴스·금 주말 예고)','N'],['배한나','지원사업 공고 찾기','지원사업','weekly','1','','13:00','기업마당·K-Startup·소상공인24 등 신규 공고 확인','N'],['배한나','지원사업 서류 준비','지원사업','weekly','3','','13:00','사업계획서 초안·증빙 서류 준비, 제출은 대표 승인 후','N'],['배한나','스마트플레이스 포스터 교체','네이버','weekly','2','','13:00','계정·업체명 확인 → 대표 이미지 교체 → 모바일 확인','N'],['배한나','메타 광고 성과 점검','메타 광고','weekly','2','','14:30','노출·클릭·문의 수·광고비 기록','N'],['배한나','AI 영상 기획·생성','AI 영상','weekly','4','','13:00','주제·참조 소스·프롬프트 → 3~5개 생성','N'],['배한나','AI 영상 편집·업로드','AI 영상','weekly','5','','13:00','15~30초 편집, 자막·로고, 검수 후 업로드','N'],['배한나','주말 인스타 예약','인스타그램','weekly','5','','15:00','토·일 게시물 예약 업로드','N'],['배한나','주간 보고 제출','보고','weekly','5','','15:30','보고 탭에서 이번 주 보고 작성','N'],['배한나','블로그 체험단 팀 수 조사','블로그','monthly','','5','11:30','전 지점 단톡방에 이번 달 운영 팀 수 확인','Y'],['배한나','블로그 선정 인원 송부','블로그','monthly','','19','11:30','지점별 선정 명단 송부','Y'],['박하운','배한나 용역대금 지급 (3.3% 공제)','정산','monthly','','10','11:00','전월 1일~말일분','Y']];
   const M = t.slice(0,7);
-  DB = { members:[{name:'박하운',role:'관리자',job:'대표',color:'#0B3B75',active:'Y',order:1,fin:'전체'},{name:'염찬웅',role:'관리자',job:'가맹 영업',color:'#1C8FD8',active:'Y',order:2,fin:'제한'},{name:'배한나',role:'직원',job:'마케팅 디렉터',color:'#E0732F',active:'Y',order:3,fin:'없음'},{name:'한얼',role:'직원',job:'가맹 영업',color:'#2E9E6B',active:'Y',order:4,fin:'제한'},{name:'유경웅',role:'직원',job:'가맹 영업',color:'#8A55C9',active:'Y',order:5,fin:'없음'}],
+  DB = { members:[{name:'박하운',role:'관리자',job:'대표',color:'#0B3B75',active:'Y',order:1,fin:'전체'},{name:'염찬웅',role:'관리자',job:'가맹 영업',color:'#1C8FD8',active:'Y',order:2,fin:'전체'},{name:'배한나',role:'직원',job:'마케팅 디렉터',color:'#E0732F',active:'Y',order:3,fin:'없음'},{name:'한얼',role:'직원',job:'가맹 영업',color:'#2E9E6B',active:'Y',order:4,fin:'제한'},{name:'유경웅',role:'직원',job:'가맹 영업',color:'#8A55C9',active:'Y',order:5,fin:'없음'}],
     finance: [
       { id:'F1', month:M, kind:'지출', cat:'임대료·관리비', branch:'건물주', title:'본사 사무실 월세 (예시)', amount:'1100000', vat:'포함', due:M+'-05', done:'Y', by:'박하운', status:'승인', approver:'박하운' },
       { id:'F2', month:M, kind:'지출', cat:'인건비', branch:'배한나', title:'마케터 용역대금 (3.3% 공제 전, 예시)', amount:'1000000', vat:'없음', due:M+'-10', done:'N', by:'박하운', status:'승인', approver:'박하운' },
@@ -744,7 +795,7 @@ function demoApi(action, b){
       return { ok:true, ...JSON.parse(JSON.stringify(DB)), finance: DB.finance.filter(vis).map(x=>({...x})), fin, me, admin, today: ymd(new Date()), salesAppUrl: SALES_APP, sheetUrl: admin?'https://docs.google.com/':'', ver:'1' }; }
     case 'finCheck': { const f = DB.finance.find(x=>x.id===b.id); f.done = b.done?'Y':'N'; return { ok:true, obj:{...f} }; }
     case 'finApprove': { const f = DB.finance.find(x=>x.id===b.id); f.status = b.ok?'승인':'반려'; f.approver = me; return { ok:true, obj:{...f} }; }
-    case 'upsert': { const k = key[b.table]||'id'; const arr = DB[b.table]; const o = b.obj; if (!o[k]) o[k] = 'X'+Date.now(); const i = arr.findIndex(x=>x[k]===o[k]); const cur = i>=0?arr[i]:{};
+    case 'upsert': { const k = key[b.table]||'id'; const arr = DB[b.table]; const o = b.obj; if (!o[k]) o[k] = 'X'+Date.now()+Math.random().toString(36).slice(2,6); const i = arr.findIndex(x=>x[k]===o[k]); const cur = i>=0?arr[i]:{};
       const m = { ...cur, ...o }; if (b.table==='finance') { const fin = (DB.members.find(x=>x.name===me)||{}).fin; if (i<0) { m.by = me; m.done='N'; } m.status = fin==='전체'?'승인':'대기'; m.amount = String(m.amount); m.cost = String(m.cost||''); }
       if (b.table==='tasks' && i>=0 && o.status==='완료' && !admin && cur.by && cur.by!==me) m.status = '검토 요청';
       if (b.table==='tasks') { if (i<0) { m.by = me; m.created = now(); m.status = m.status||'할 일'; m.comments='[]'; m.progress = m.progress||'0'; } m.updated = now(); if (m.status==='완료') m.progress='100'; }
@@ -762,7 +813,7 @@ function demoApi(action, b){
 
 /* ============ 시작 ============ */
 if ('serviceWorker' in navigator && !DEMO) navigator.serviceWorker.register('sw.js').catch(()=>{});
-if (DEMO) { const q = new URLSearchParams(location.search); if (q.get('as')) { S.me = q.get('as'); S.token = 'demo'; } if (q.get('tab')) S.tab = q.get('tab'); }
+if (DEMO) { const q = new URLSearchParams(location.search); if (q.get('as')) { S.me = q.get('as'); S.token = 'demo'; } if (q.get('tab')) S.tab = q.get('tab'); if (q.get('seg')) S.finSeg = q.get('seg'); }
 if (S.token) load(); else renderLogin();
 </script>
 </body>
