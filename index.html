@@ -162,6 +162,12 @@ textarea.in{height:auto;min-height:84px;padding:10px 12px;resize:vertical;line-h
 .mr{text-align:right;white-space:nowrap}.mr b{display:block;font-size:14.5px}.mr span{font-size:12.5px;font-weight:800}.c-green{color:var(--green)}.c-gold{color:#B57A00}.c-red{color:var(--red)}
 .msum{display:flex;justify-content:space-between;align-items:center;padding-top:8px;font-size:13px;color:var(--sub)}.msum b{font-size:16px;color:var(--ink)}
 .crow{border:1px solid var(--line);border-radius:12px;padding:10px 11px;margin-bottom:9px}.ct{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.ct b{font-size:15.5px}
+.seg.big button{padding:10px 6px;font-size:15px}
+.cap2{font-size:12px;color:var(--sub);margin-top:8px;line-height:1.5}
+.stats.s5{grid-template-columns:repeat(5,1fr)}.stats.s5 b{font-size:17px}
+.rank{margin-top:12px;display:flex;flex-direction:column;gap:8px}.rk{display:flex;align-items:center;gap:8px}.rk .no{width:18px;font-weight:800;color:var(--sub);text-align:center}.rk b{width:52px;font-size:14px}.rb{flex:1;height:12px;background:#EAF3FB;border-radius:7px;overflow:hidden}.rb i{display:block;height:100%;border-radius:7px}.rk em{font-style:normal;font-weight:800;font-size:14px;width:42px;text-align:right}
+.smemo{background:var(--ice);border-radius:10px;padding:8px 11px;margin-top:8px;font-size:13.5px;white-space:pre-wrap}.smemo b{display:block;font-size:12px;color:var(--sub);margin-bottom:1px}.smemo.cm{background:#E9F8F0}.smemo.cm b{color:var(--green)}
+.dstrip{display:flex;gap:4px;margin-top:10px;overflow-x:auto;padding-bottom:2px}.dstrip button{flex:1 0 40px;min-width:40px;border:1px solid var(--line);border-radius:10px;padding:5px 2px;background:#fff;display:flex;flex-direction:column;align-items:center}.dstrip small{font-size:11px;color:var(--sub)}.dstrip b{font-size:15px}.dstrip button.has{background:var(--skyl);border-color:#B9DDF6}.dstrip button.ck{background:var(--green);border-color:var(--green);color:#fff}.dstrip button.ck small{color:#DFF5EA}
 .lock{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--sub);background:#F4F8FC;border-radius:10px;padding:8px 11px;margin-bottom:12px}
 .ptitle{display:none;font-size:24px;font-weight:800;letter-spacing:-.6px;margin-bottom:16px}
 </style>
@@ -182,6 +188,7 @@ const I = {
   rep:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>',
   admin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
   fin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2.5"/><path d="M7 9.5l1.6 5 1.4-4 1.4 4 1.6-5M6 12h8"/><circle cx="17.5" cy="12" r="1.6"/></svg>',
+  sales:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg>',
   plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>'
 };
@@ -262,18 +269,19 @@ function itemsOn(s, scope){
 }
 
 /* ============ 렌더 공통 ============ */
-const NAV = () => [['home','홈',I.home],['cal','일정',I.cal],['task','업무',I.task],['rep','보고',I.rep]].concat(S.d && S.d.fin && S.d.fin!=='없음' ? [['fin','재무',I.fin]] : []).concat(S.d && S.d.admin ? [['admin','관리',I.admin]] : []);
+const NAV = () => [['home','홈',I.home],['cal','일정',I.cal],['task','업무',I.task],['sales','영업',I.sales]].concat(S.d && S.d.fin && S.d.fin!=='없음' ? [['fin','재무',I.fin]] : []).concat(S.d && S.d.admin ? [['admin','관리',I.admin]] : []);
 function render(){
   if (!S.d) return;
   const nav = NAV();
   const m = mem(S.me);
+  const navTab = S.tab==='rep' ? 'task' : S.tab;
   $('#app').innerHTML = `${DEMO?'<div class="demo">데모 화면입니다 · 실제 데이터가 아니에요</div>':''}
   <aside class="side"><img src="logo-white.png" alt="군함맥주"><div class="st">본사 업무 시스템</div>
-    ${nav.map(n=>`<button class="nv ${S.tab===n[0]?'on':''}" data-tab="${n[0]}">${n[2]}${n[1]}</button>`).join('')}
+    ${nav.map(n=>`<button class="nv ${navTab===n[0]?'on':''}" data-tab="${n[0]}">${n[2]}${n[1]}</button>`).join('')}
     <div class="me">${av(S.me)}<div>${esc(S.me)}<small>${esc(m.job||'')} · ${S.d.admin?'관리자':'직원'}</small></div><button class="btn sm ghost" data-act="logout">로그아웃</button></div></aside>
   <header class="top"><img src="logo-white.png" alt=""><div class="tt">본사 업무<small>${esc(md(S.today))}</small></div>${av(S.me)}</header>
   <main id="main">${VIEWS[S.tab]()}</main>
-  <nav class="tabs">${nav.map(n=>`<button class="${S.tab===n[0]?'on':''}" data-tab="${n[0]}">${n[2]}${n[1]}</button>`).join('')}</nav>
+  <nav class="tabs">${nav.map(n=>`<button class="${navTab===n[0]?'on':''}" data-tab="${n[0]}">${n[2]}${n[1]}</button>`).join('')}</nav>
   ${['cal','task'].includes(S.tab)?`<button class="fab" data-act="${S.tab==='cal'?'newEvent':'newTask'}" aria-label="추가">${I.plus}</button>`:''}`;
 }
 
@@ -358,7 +366,7 @@ function viewTask(){
   const cnt = k => ts.filter(groups[k]).length;
   ts = ts.filter(groups[S.taskSt]).sort((a,b)=> S.taskSt==='done' ? (b.updated||'').localeCompare(a.updated||'') : (overdue(b)-overdue(a)) || (a.due||'9').localeCompare(b.due||'9'));
   const by = {}; if (S.taskSt==='open') ['검토 요청','진행 중','할 일'].forEach(s=>by[s]=ts.filter(t=>t.status===s));
-  return `<div class="ptitle">업무</div>
+  return `<div class="ptitle">업무</div>${taskRepSeg()}
   <div class="seg"><button class="${S.taskScope==='mine'?'on':''}" data-act="taskScope" data-v="mine">내 업무</button><button class="${S.taskScope==='all'?'on':''}" data-act="taskScope" data-v="all">팀 전체</button></div>
   <div class="pills" style="margin-bottom:12px">${[['open','진행 중'],['done','완료'],['hold','보류']].map(x=>`<button class="${S.taskSt===x[0]?'on':''}" data-act="taskSt" data-v="${x[0]}">${x[1]} ${cnt(x[0])}</button>`).join('')}</div>
   ${S.taskSt==='open'? `<div class="pc3">${Object.keys(by).map(k=>`<div><div class="sec-t" style="margin-top:4px">${stLabel(k)} · ${by[k].length}</div>${by[k].length? by[k].map(taskCard).join('') : '<div class="empty" style="background:#fff;border-radius:14px;border:1px dashed var(--line)">없음</div>'}</div>`).join('')}</div>`
@@ -383,9 +391,70 @@ function viewRep(){
   const team = S.d.admin? `<div class="card"><div class="ch"><h3>팀 보고 현황</h3><span class="chip blue">${ms.filter(m=>repOf(m.name)).length}/${ms.length} 제출</span></div>
     ${ms.map(m=>{ const r = repOf(m.name); return `<button class="list-btn" ${r?`data-act="viewRep" data-id="${esc(r.id)}"`:''}>${av(m.name,'sm')}<span>${esc(m.name)} <em>${esc(m.job||'')}</em></span>${r? (r.checked==='Y'?'<span class="chip green">확인함</span>':'<span class="chip blue">제출</span>') : '<span class="chip gold">미제출</span>'}</button>`; }).join('')}</div>` : '';
   const hist = (S.d.reports||[]).filter(r=>r.owner===S.me && r.week!==wk).sort((a,b)=>b.week.localeCompare(a.week)).slice(0,6);
-  return `<div class="ptitle">주간 보고</div>
+  return `<div class="ptitle">주간 보고</div>${taskRepSeg()}
   <div class="card" style="display:flex;align-items:center;justify-content:space-between"><button class="btn sm ghost" data-act="repMove" data-v="-7">‹ 지난주</button><b>${esc(mdShort(wk))} – ${esc(mdShort(fri))}</b><button class="btn sm ghost" data-act="repMove" data-v="7" ${wk>=monday(S.today)?'disabled style="opacity:.4"':''}>다음주 ›</button></div>
   <div class="pc2"><div>${mineCard}</div><div>${team}${hist.length?`<div class="card"><div class="ch"><h3>지난 보고</h3></div>${hist.map(r=>`<button class="list-btn" data-act="repGo" data-v="${esc(r.week)}"><span>${esc(mdShort(r.week))} 주</span>${r.checked==='Y'?'<span class="chip green">확인함</span>':'<span class="chip">제출</span>'}</button>`).join('')}</div>`:''}</div></div>`;
+}
+function taskRepSeg(){ return `<div class="seg big"><button class="${S.tab==='task'?'on':''}" data-tab="task">업무</button><button class="${S.tab==='rep'?'on':''}" data-tab="rep">주간 보고</button></div>`; }
+
+/* ============ 영업 ============ */
+const SALES_T = ['등록','통화','제안','미팅','계약'];
+const SALES_C = { '등록':'blue', '통화':'', '제안':'purple', '미팅':'gold', '계약':'green' };
+function salesRange(){
+  const sd = S.sd || S.today;
+  if (S.sp==='week') { const a = monday(sd); return [a, addD(a,6), `${mdShort(a)} – ${mdShort(addD(a,6))}`]; }
+  if (S.sp==='month') { const d = parse(sd); const a = ymd(new Date(d.getFullYear(), d.getMonth(), 1)); const b = ymd(new Date(d.getFullYear(), d.getMonth()+1, 0)); return [a, b, `${d.getFullYear()}년 ${d.getMonth()+1}월`]; }
+  return [sd, sd, md(sd)];
+}
+const sDaily = (d, n) => (S.d.salesDaily||[]).find(x=>x.date===d && x.member===n);
+function salesPeople(evs){
+  const ms = (S.d.members||[]).filter(m=>m.active!=='N');
+  return ms.filter(m=>/영업/.test(m.job||'') || evs.some(e=>e.w===m.name) || ((S.d.sales||{}).by||{})[m.name]);
+}
+function salesStat(evs, n){ const mine = evs.filter(e=>e.w===n); const c = {}; SALES_T.forEach(t=>c[t] = mine.filter(e=>e.t===t).length); c.stores = new Set(mine.filter(e=>e.t!=='계약').map(e=>e.s)).size; c.list = mine; return c; }
+function viewSales(){
+  const sales = S.d.sales||{}; if (!S.sp) S.sp = 'day';
+  if (!sales.connected) return `<div class="ptitle">영업</div><div class="card"><div class="empty">영업 DB가 연결되지 않았어요</div></div>`;
+  const [a, b, label] = salesRange();
+  const evs = (sales.events||[]).filter(e=>e.d>=a && e.d<=b);
+  const people = salesPeople(evs).map(m=>({ m, c: salesStat(evs, m.name) })).sort((x,y)=>y.c.stores-x.c.stores);
+  const max = Math.max(1, ...people.map(p=>p.c.stores));
+  const days = []; if (S.sp!=='day') for (let s=a; s<=b && s<=S.today; s=addD(s,1)) if (isWork(s)) days.push(s);
+  const unchecked = S.d.admin && S.sp==='day' ? people.filter(p=>!(sDaily(a,p.m.name)||{}).checked && (p.c.list.length || (sDaily(a,p.m.name)||{}).memo)).length : 0;
+  const tot = SALES_T.reduce((o,t)=>{ o[t] = evs.filter(e=>e.t===t).length; return o; }, {});
+  return `<div class="ptitle">영업</div>
+  <div class="seg big">${[['day','하루'],['week','이번 주'],['month','이번 달']].map(x=>`<button class="${S.sp===x[0]?'on':''}" data-act="sp" data-v="${x[0]}">${x[1]}</button>`).join('')}</div>
+  <div class="card" style="display:flex;align-items:center;justify-content:space-between"><button class="btn sm ghost" data-act="sdMove" data-v="-1">‹</button><b style="font-size:17px">${esc(label)}</b><button class="btn sm ghost" data-act="sdMove" data-v="1">›</button></div>
+  ${unchecked?`<div class="appr"><h3>오늘 아직 확인 안 한 영업자 ${unchecked}명</h3><p style="font-size:13.5px;color:var(--sub)">아래 카드에서 <b>확인하기</b>를 눌러 주세요</p></div>`:''}
+  <div class="pc2"><div>
+  <div class="card"><div class="ch"><h3>팀 영업 현황</h3><a class="more" href="${esc(S.d.salesAppUrl||SALES_APP)}" target="_blank">영업앱 ›</a></div>
+    <div class="stats s5">${SALES_T.map(t=>`<div><b>${tot[t]}</b><span>${t==='등록'?'매장 등록':t==='제안'?'제안 발송':t==='미팅'?'미팅 잡힘':t}</span></div>`).join('')}</div>
+    <div class="rank">${people.map((p,i)=>`<div class="rk"><span class="no">${i+1}</span>${av(p.m.name,'sm')}<b>${esc(p.m.name)}</b><div class="rb"><i style="width:${p.c.stores/max*100}%;background:${esc(p.m.color)}"></i></div><em>${p.c.stores}곳</em></div>`).join('')}</div>
+    <p class="cap2">영업한 매장 수 = 기간 안에 등록·통화·제안한 매장 수 (같은 매장은 1곳) · ${esc(sales.at||'')} 기준</p></div>
+  </div><div>
+  ${people.map(({m,c})=>{ const sdv = S.sp==='day' ? sDaily(a, m.name) : null; const isMe = m.name===S.me;
+    const chkDays = S.sp!=='day' ? days.filter(d=>(sDaily(d,m.name)||{}).checked).length : 0;
+    return `<div class="mem"><div class="mh">${av(m.name,'lg')}<div class="nm"><b>${esc(m.name)}</b><span>${esc(m.job||'')} · 영업한 매장 ${c.stores}곳</span></div>
+      ${S.sp==='day' ? (sdv&&sdv.checked ? `<span class="chip green">확인 ${esc(sdv.checker)}</span>` : '<span class="chip">미확인</span>') : `<span class="chip ${chkDays&&chkDays>=days.length?'green':'gold'}">확인 ${chkDays}/${days.length}일</span>`}</div>
+      <div class="stats s5">${SALES_T.map(t=>`<div><b>${c[t]}</b><span>${t}</span></div>`).join('')}</div>
+      ${S.sp==='day' ? `${sdv&&sdv.memo?`<div class="smemo"><b>영업 메모</b>${esc(sdv.memo)}</div>`:''}${sdv&&sdv.comment?`<div class="smemo cm"><b>${esc(sdv.checker||'관리자')} 코멘트</b>${esc(sdv.comment)}</div>`:''}
+        <button class="btn ${S.d.admin&&!(sdv&&sdv.checked)?'sky':'ghost'} block" style="margin-top:10px" data-act="salesDay" data-v="${esc(m.name)}" data-date="${a}">${S.d.admin? (sdv&&sdv.checked?'내역 보기 · 코멘트 수정':'내역 보고 확인하기') : isMe ? '내 내역 · 오늘 영업 메모 쓰기' : '내역 보기'}</button>`
+      : `<div class="dstrip">${days.map(d=>{ const n = c.list.filter(e=>e.d===d && e.t!=='계약').length; const ck = (sDaily(d,m.name)||{}).checked; return `<button class="${ck?'ck':n?'has':''}" data-act="salesDay" data-v="${esc(m.name)}" data-date="${d}"><small>${WD[parse(d).getDay()]}${S.sp==='month'?' '+parse(d).getDate():''}</small><b>${n}</b></button>`; }).join('')}</div><p class="cap2">칸을 누르면 그날 내역을 보고 확인할 수 있어요 · 초록 = 관리자 확인</p>`}</div>`; }).join('')}
+  </div></div>`;
+}
+function salesDaySheet(n, d){
+  const evs = ((S.d.sales||{}).events||[]).filter(e=>e.w===n && e.d===d);
+  const sdv = sDaily(d, n) || {}; const isMe = n===S.me;
+  sheet(`<h3>${esc(n)} · ${esc(md(d))}</h3>
+  <div class="stats s5" style="margin:-6px 0 12px">${SALES_T.map(t=>`<div><b>${evs.filter(e=>e.t===t).length}</b><span>${t}</span></div>`).join('')}</div>
+  <div class="sec-t" style="margin-top:0">영업 내역 ${evs.length}건</div>
+  ${evs.length? evs.map(e=>`<div class="ev"><span class="chip ${SALES_C[e.t]}" style="min-width:44px;justify-content:center">${e.t}</span><div class="tx"><b>${esc(e.s||'')}</b><span>${esc([e.m, e.r].filter(Boolean).join(' · '))}</span></div></div>`).join('') : '<div class="empty">이날 영업앱 기록이 없어요</div>'}
+  <label class="f" style="margin-top:12px"><span>영업 메모 (${esc(n)}) ${sdv.memoAt?'· '+esc(sdv.memoAt):''}</span><textarea class="in" id="sm_memo" placeholder="예) 점포라인 후보 12곳 통화, 풍암동 현장 방문 2곳" ${isMe?'':'disabled'}>${esc(sdv.memo||'')}</textarea></label>
+  ${isMe?'<button class="btn ghost block" data-act="smSave" style="margin-bottom:12px">메모 저장</button>':''}
+  ${S.d.admin?`<label class="f"><span>관리자 코멘트</span><textarea class="in" id="sm_cm" placeholder="예) 통화 수 좋아요. 미팅 잡힌 곳 내일 같이 확인해요">${esc(sdv.comment||'')}</textarea></label>
+  <div class="acts">${sdv.checked?'<button class="btn ghost" data-act="smCheck" data-v="0">확인 취소</button>':''}<button class="btn sky" data-act="smCheck" data-v="1">${sdv.checked?'코멘트 저장':'확인 완료'}</button></div>`
+   : sdv.checked?`<div class="smemo cm"><b>${esc(sdv.checker)} 확인 · ${esc(sdv.at)}</b>${esc(sdv.comment||'')}</div>`:'<p class="cap2">아직 관리자가 확인하지 않았어요</p>'}`);
+  $('#dim').dataset.member = n; $('#dim').dataset.date = d;
 }
 function autoSummary(n, wk){ const end = addD(wk,6); const ts = S.d.tasks||[]; return { doneT: ts.filter(t=>t.owner===n && t.status==='완료' && (t.updated||'').slice(0,10)>=wk && (t.updated||'').slice(0,10)<=end).length, openT: ts.filter(t=>t.owner===n && ['할 일','진행 중','검토 요청'].includes(t.status)).length }; }
 
@@ -543,7 +612,7 @@ function finCalc(){ const el = $('#f_calc'); if (!el) return; const v = pillVal(
   if (pillVal('f_cat')==='공사차익') { const k = vatCalc(numVal('f_cost'), v); el.innerHTML = `받는 공사비 공급가 ${won(c.supply)} − 원가 공급가 ${won(k.supply)}<br>공사차익 <b>${won(c.supply-k.supply)}</b> · 마진율 <b>${mRate(c.supply,k.supply)}%</b> · 원가율 ${c.supply?Math.round(k.supply/c.supply*1000)/10:0}%`; }
   else el.innerHTML = `공급가 ${won(c.supply)} + 부가세 ${won(c.vat)}<br>합계 <b>${won(c.total)}</b>`; }
 
-const VIEWS = { home: viewHome, cal: viewCal, task: viewTask, rep: viewRep, fin: viewFin, admin: viewAdmin };
+const VIEWS = { home: viewHome, cal: viewCal, task: viewTask, rep: viewRep, sales: viewSales, fin: viewFin, admin: viewAdmin };
 
 /* ============ 시트(모달) ============ */
 function sheet(html){ closeSheet(); const d = document.createElement('div'); d.className='dim'; d.id='dim'; d.innerHTML=`<div class="sheet"><div class="grab"></div>${html}</div>`; d.addEventListener('click', e=>{ if(e.target===d) closeSheet(); }); document.body.appendChild(d); }
@@ -711,6 +780,11 @@ document.addEventListener('click', async e => {
     case 'report': case 'approve': case 'reject': { const id = dim.id; const st = a==='approve' ? '완료' : a==='reject' ? '진행 중' : '검토 요청'; const j = await api('upsert', { table:'tasks', obj:{ id, status: st } }); if (!j.ok) return toast(j.error); if (a==='reject') await api('comment', { id, text: '반려: 다시 진행해 주세요' }); closeSheet(); toast(a==='approve'?'승인했어요':a==='reject'?'반려했어요':'완료 보고했어요. 관리자 승인을 기다려요'); await load(); break; }
     case 'finSeg': S.finSeg = ds.v; render(); break;
     case 'mScope': S.mScope = ds.v; render(); break;
+    case 'sp': S.sp = ds.v; S.sd = S.today; render(); break;
+    case 'sdMove': { const sd = S.sd || S.today; const n = Number(ds.v); if (S.sp==='week') S.sd = addD(sd, 7*n); else if (S.sp==='month') { const d = parse(sd); S.sd = ymd(new Date(d.getFullYear(), d.getMonth()+n, 1)); } else S.sd = addD(sd, n); render(); break; }
+    case 'salesDay': salesDaySheet(ds.v, ds.date); break;
+    case 'smSave': { const j = await api('salesMemo', { date: dim.date, memo: val('sm_memo') }); if (!j.ok) return toast(j.error); S.d.salesDaily = (S.d.salesDaily||[]).filter(x=>x.id!==j.obj.id).concat(j.obj); closeSheet(); render(); toast('영업 메모를 저장했어요'); break; }
+    case 'smCheck': { const j = await api('salesCheck', { date: dim.date, member: dim.member, checked: ds.v==='1', comment: val('sm_cm') }); if (!j.ok) return toast(j.error); S.d.salesDaily = (S.d.salesDaily||[]).filter(x=>x.id!==j.obj.id).concat(j.obj); closeSheet(); render(); toast(ds.v==='1'?'확인했어요':'확인을 취소했어요'); break; }
     case 'conNew': conSheet(); break;
     case 'conSave': { const br = val('c_branch'); if (!br) return toast('지점을 입력해 주세요'); const v = pillVal('c_vat'); const rows = CON_SUBS.map((s,i)=>({ s, a: numVal('c_a'+i), c: numVal('c_c'+i) })).filter(r=>r.a>0);
       if (!rows.length) return toast('받는 공사비를 하나 이상 입력해 주세요'); el.disabled = true; el.textContent = '저장 중…';
@@ -781,6 +855,13 @@ function demoSeed(){
     sales: { connected:true, at:t+' 14:02', by:{ '염찬웅':{newW:9,callW:31,propW:6,callT:7,followT:2,total:120,contract:2}, '한얼':{newW:12,callW:24,propW:4,callT:5,followT:5,total:88,contract:1}, '유경웅':{newW:4,callW:11,propW:2,callT:0,followT:3,total:41,contract:0}, '배한나':{newW:1,callW:2,propW:1,callT:0,followT:0,total:5,contract:0} }, pipe:{'신규':96,'부재중':41,'재연락':28,'제안발송':37,'상담중':14,'미팅예정':5,'계약':3,'보류':8,'거절':22}, meetings:[{date:addD(t,1),title:'○○호프 (예시)',owner:'염찬웅'},{date:addD(t,4),title:'△△포차 (예시)',owner:'한얼'}], follow:{'염찬웅':['○○호프','□□치킨'],'한얼':['가나다주점','라마바호프','사아자포차','차카타맥주','파하비어']} } };
   // 지난 며칠 체크 예시
   for (let i=0;i<7;i++){ const s = addD(t,-i); if (s<wk) break; DB.routines.forEach(r=>{ S.d = { ...DB }; if (routineOn(r,s) && (i>0 ? Math.random()<.85 : (r.time||'')<'12:30')) DB.checks.push({ id:s+'_'+r.id, date:s, rid:r.id, owner:r.owner, title:r.title, done:'Y', at:s+' '+r.time, memo:'' }); }); }
+  // 영업 활동 예시 (최근 3주)
+  const shops = ['가나호프','다라포차','마바치킨','사아주점','차카맥주','파하비어','동네실내포차','역전요리주점','골목호프','별빛맥주','한스푸드','사거리치킨'];
+  const evs = []; const who = { '염찬웅':6, '한얼':8, '유경웅':3 };
+  for (let i=0;i<21;i++){ const s = addD(t,-i); const w = parse(s).getDay(); if (w===0||w===6) continue; Object.entries(who).forEach(([n,k])=>{ const cnt = Math.max(0, Math.round(k*(0.5+((i*7+n.length*3)%10)/10)) - (i===0?2:0)); for (let j=0;j<cnt;j++){ const sh = shops[(i*3+j+n.length)%shops.length]+' (예시)'; const r = (i+j)%9; const tp = r===0?'등록':r===1?'제안':r===2&&j%3===0?'미팅':'통화'; evs.push({ d:s, m:pad(10+j%7)+':'+pad((j*13)%60), w:n, t:tp, s:sh, r: tp==='통화'?['부재중','통화완료','내일 다시','관심없음'][j%4]:tp==='미팅'?'미팅잡힘':tp==='제안'?'제안서 문자':'' }); } }); }
+  evs.push({ d:addD(t,-2), m:'', w:'염찬웅', t:'계약', s:'별빛맥주 (예시)', r:'' });
+  DB.sales.events = evs.sort((a,b)=>(b.d+b.m).localeCompare(a.d+a.m));
+  DB.salesDaily = []; for (let i=1;i<8;i++){ const s = addD(t,-i); if (!isWork(s)) continue; ['염찬웅','한얼'].forEach(n=>DB.salesDaily.push({ id:s+'_'+n, date:s, member:n, memo: n==='한얼'?'점포라인 후보 통화 위주 (예시)':'', checked: i%3?'Y':'', checker:'박하운', comment: i%3?'수고했어요 (예시)':'', at:s+' 18:00' })); }
   DB.reports.push({ id:'배한나_'+addD(wk,-7), week:addD(wk,-7), owner:'배한나', body:JSON.stringify({done:'인스타 7건, 포스터 교체, AI 릴스 1편',nums:'동명동 술집 9위(지난주 7위)',issue:'겨울 메뉴 사진 원본 필요',next:'지원사업 1건 서류'}), submitted:addD(wk,-3)+' 15:32', checked:'Y', comment:'수고했어요. 사진은 월요일에 전달할게요.' });
 }
 function demoApi(action, b){
@@ -793,6 +874,8 @@ function demoApi(action, b){
     case 'login': return /^\d{4,8}$/.test(b.pin||'') ? { ok:true, name:b.name, token:'demo', role:(DB.members.find(m=>m.name===b.name)||{}).role } : { ok:false, error:'PIN은 숫자 4~8자리예요' };
     case 'all': { const fin = (DB.members.find(m=>m.name===me)||{}).fin||'없음'; const vis = f => fin==='전체' || (fin==='제한' && (f.kind==='지출' || ['로열티','식자재'].includes(f.cat)));
       return { ok:true, ...JSON.parse(JSON.stringify(DB)), finance: DB.finance.filter(vis).map(x=>({...x})), fin, me, admin, today: ymd(new Date()), salesAppUrl: SALES_APP, sheetUrl: admin?'https://docs.google.com/':'', ver:'1' }; }
+    case 'salesMemo': { const id = b.date+'_'+me; const cur = DB.salesDaily.find(x=>x.id===id) || { id, date:b.date, member:me }; cur.memo = b.memo; cur.memoAt = now(); DB.salesDaily = DB.salesDaily.filter(x=>x.id!==id).concat(cur); return { ok:true, obj:{...cur} }; }
+    case 'salesCheck': { if (!admin) return { ok:false, error:'관리자만 할 수 있어요' }; const id = b.date+'_'+b.member; const cur = DB.salesDaily.find(x=>x.id===id) || { id, date:b.date, member:b.member }; cur.checked = b.checked?'Y':''; cur.checker = b.checked?me:''; cur.comment = b.comment; cur.at = now(); DB.salesDaily = DB.salesDaily.filter(x=>x.id!==id).concat(cur); return { ok:true, obj:{...cur} }; }
     case 'finCheck': { const f = DB.finance.find(x=>x.id===b.id); f.done = b.done?'Y':'N'; return { ok:true, obj:{...f} }; }
     case 'finApprove': { const f = DB.finance.find(x=>x.id===b.id); f.status = b.ok?'승인':'반려'; f.approver = me; return { ok:true, obj:{...f} }; }
     case 'upsert': { const k = key[b.table]||'id'; const arr = DB[b.table]; const o = b.obj; if (!o[k]) o[k] = 'X'+Date.now()+Math.random().toString(36).slice(2,6); const i = arr.findIndex(x=>x[k]===o[k]); const cur = i>=0?arr[i]:{};
