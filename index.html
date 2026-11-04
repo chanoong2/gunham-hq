@@ -163,6 +163,16 @@ textarea.in{height:auto;min-height:84px;padding:10px 12px;resize:vertical;line-h
 .msum{display:flex;justify-content:space-between;align-items:center;padding-top:8px;font-size:13px;color:var(--sub)}.msum b{font-size:16px;color:var(--ink)}
 .crow{border:1px solid var(--line);border-radius:12px;padding:10px 11px;margin-bottom:9px}.ct{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}.ct b{font-size:15.5px}
 .seg.big button{padding:10px 6px;font-size:15px}
+.sheet{position:relative}.sheet .x{position:absolute;top:12px;right:14px;width:34px;height:34px;border-radius:50%;background:#EEF4FA;color:var(--sub);font-size:15px;font-weight:800;z-index:2}
+.top .tt{font-size:18px}
+.rf{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.2);color:#fff;font-size:19px;font-weight:700;display:flex;align-items:center;justify-content:center}
+.tabs button,.side button.nv{position:relative}.bdg{position:absolute;top:3px;left:calc(50% + 6px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--red);color:#fff;font-style:normal;font-size:11px;font-weight:800;line-height:18px;text-align:center}
+.side .bdg{position:static;margin-left:auto}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}.quick button{background:#fff;border:1px solid var(--line);border-radius:14px;padding:11px 4px 9px;display:flex;flex-direction:column;align-items:center;gap:5px;font-size:12.5px;font-weight:700;color:var(--ink)}.quick i{width:38px;height:38px;border-radius:12px;background:var(--skyl);color:var(--sky2);display:flex;align-items:center;justify-content:center}.quick svg{width:21px;height:21px}
+.dq{margin:-4px 0 8px}.dq button{height:32px;font-size:12.5px}
+.chk{width:32px;height:32px}
+.loading{min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--sub);font-weight:600}.spin{width:36px;height:36px;border:4px solid var(--skyl);border-top-color:var(--sky2);border-radius:50%;animation:sp 0.8s linear infinite}@keyframes sp{to{transform:rotate(360deg)}}
+.btn[data-busy]{opacity:.55;pointer-events:none}
 .cap2{font-size:12px;color:var(--sub);margin-top:8px;line-height:1.5}
 .stats.s5{grid-template-columns:repeat(5,1fr)}.stats.s5 b{font-size:17px}
 .rank{margin-top:12px;display:flex;flex-direction:column;gap:8px}.rk{display:flex;align-items:center;gap:8px}.rk .no{width:18px;font-weight:800;color:var(--sub);text-align:center}.rk b{width:52px;font-size:14px}.rb{flex:1;height:12px;background:#EAF3FB;border-radius:7px;overflow:hidden}.rb i{display:block;height:100%;border-radius:7px}.rk em{font-style:normal;font-weight:800;font-size:14px;width:42px;text-align:right}
@@ -219,6 +229,7 @@ async function api(action, body={}){
   return j;
 }
 async function load(){
+  if (!S.d) $('#app').innerHTML = '<div class="loading"><div class="spin"></div>불러오는 중…</div>';
   const j = await api('all');
   if (!j.ok) { toast(j.error||'불러오지 못했어요'); return; }
   S.d = j; S.today = j.today || S.today; S.ver = j.ver;
@@ -277,13 +288,24 @@ function render(){
   const navTab = S.tab==='rep' ? 'task' : S.tab;
   $('#app').innerHTML = `${DEMO?'<div class="demo">데모 화면입니다 · 실제 데이터가 아니에요</div>':''}
   <aside class="side"><img src="logo-white.png" alt="군함맥주"><div class="st">본사 업무 시스템</div>
-    ${nav.map(n=>`<button class="nv ${navTab===n[0]?'on':''}" data-tab="${n[0]}">${n[2]}${n[1]}</button>`).join('')}
+    ${nav.map(n=>`<button class="nv ${navTab===n[0]?'on':''}" data-tab="${n[0]}">${n[2]}${n[1]}${badge(n[0])}</button>`).join('')}
     <div class="me">${av(S.me)}<div>${esc(S.me)}<small>${esc(m.job||'')} · ${S.d.admin?'관리자':'직원'}</small></div><button class="btn sm ghost" data-act="logout">로그아웃</button></div></aside>
-  <header class="top"><img src="logo-white.png" alt=""><div class="tt">본사 업무<small>${esc(md(S.today))}</small></div>${av(S.me)}</header>
+  <header class="top"><img src="logo-white.png" alt=""><div class="tt">${esc(TAB_NAME[S.tab]||'본사 업무')}<small>${esc(md(S.today))} · ${esc(S.me)}</small></div><button class="rf" data-act="refresh" aria-label="새로고침">↻</button>${av(S.me)}</header>
   <main id="main">${VIEWS[S.tab]()}</main>
-  <nav class="tabs">${nav.map(n=>`<button class="${navTab===n[0]?'on':''}" data-tab="${n[0]}">${n[2]}${n[1]}</button>`).join('')}</nav>
+  <nav class="tabs">${nav.map(n=>`<button class="${navTab===n[0]?'on':''}" data-tab="${n[0]}">${n[2]}${n[1]}${badge(n[0])}</button>`).join('')}</nav>
   ${['cal','task'].includes(S.tab)?`<button class="fab" data-act="${S.tab==='cal'?'newEvent':'newTask'}" aria-label="추가">${I.plus}</button>`:''}`;
 }
+
+const TAB_NAME = { home:'홈', cal:'일정', task:'업무', rep:'주간 보고', sales:'영업', fin:'재무', admin:'관리' };
+function badgeCount(tab){
+  if (!S.d) return 0;
+  if (tab==='home') { const rs = routinesFor(S.today, S.me); return rs.filter(r=>!isDone(S.today, r.id)).length; }
+  if (tab==='task') return openTasks().filter(t=>t.owner===S.me && (overdue(t) || t.due===S.today)).length + (S.d.admin ? (S.d.tasks||[]).filter(t=>t.status==='검토 요청').length : 0);
+  if (tab==='fin') return S.d.fin==='전체' ? (S.d.finance||[]).filter(f=>f.status==='대기').length : 0;
+  if (tab==='sales' && S.d.admin) { const evs = ((S.d.sales||{}).events||[]).filter(e=>e.d===S.today); return [...new Set(evs.map(e=>e.w))].filter(n=>!(sDaily(S.today,n)||{}).checked).length; }
+  return 0;
+}
+const badge = tab => { const n = badgeCount(tab); return n ? `<i class="bdg">${n>99?'99+':n}</i>` : ''; };
 
 /* ============ 홈 ============ */
 function viewHome(){
@@ -296,12 +318,21 @@ function viewHome(){
   const up = []; for (let i=0;i<7;i++){ const s = addD(td,i); itemsOn(s, 'mine').filter(x=>x.kind!=='task').forEach(x=>up.push({...x, s})); }
   const notices = (S.d.notices||[]).slice().sort((a,b)=>(b.pin==='Y')-(a.pin==='Y') || (b.at||'').localeCompare(a.at||'')).slice(0,2);
   const wk = rate(me, monday(td), td);
+  const team = (S.d.members||[]).filter(m=>m.active!=='N').reduce((a,m)=>{ const r = rate(m.name, td, td); a.due+=r.due; a.done+=r.done; return a; }, {due:0,done:0});
+  const useTeam = !rs.length && S.d.admin && team.due;
+  const hp = useTeam ? Math.round(team.done/team.due*100) : p;
   const left = `
-  <div class="hero"><div style="flex:1"><div class="d">${esc(md(td))}${isWork(td)?'':' · 쉬는 날'}</div><h2>${esc(me)}님, ${rs.length? (done===rs.length?'오늘 할 일 끝!':'오늘 할 일 '+(rs.length-done)+'개 남았어요') : '오늘 정기업무가 없어요'}</h2><p>${wk.p!=null?'이번 주 정기업무 완료율 '+wk.p+'% · ':''}진행 중 업무 ${myTasks.length}건</p></div><div class="ring" style="--p:${p}"><b>${p}%</b></div></div>
+  <div class="hero"><div style="flex:1"><div class="d">${esc(md(td))}${isWork(td)?'':' · 쉬는 날'}</div><h2>${esc(me)}님, ${rs.length? (done===rs.length?'오늘 할 일 끝!':'오늘 할 일 '+(rs.length-done)+'개 남았어요') : useTeam ? '팀 정기업무 '+team.done+'/'+team.due+' 완료' : '오늘도 화이팅!'}</h2><p>${wk.p!=null?'이번 주 정기업무 완료율 '+wk.p+'% · ':''}진행 중 업무 ${myTasks.length}건${useTeam?' · 링은 팀 완료율':''}</p></div><div class="ring" style="--p:${hp}"><b>${(rs.length||useTeam)?hp+'%':'-'}</b></div></div>
+  <div class="quick">
+    <button data-act="newTask"><i>${I.task}</i>${S.d.admin?'업무 주기':'내 업무 추가'}</button>
+    <button data-act="newEvent"><i>${I.cal}</i>일정 추가</button>
+    <button data-act="salesDay" data-v="${esc(me)}" data-date="${td}"><i>${I.sales}</i>영업 메모</button>
+    ${S.d.fin && S.d.fin!=='없음' ? `<button data-act="quickExp"><i>${I.fin}</i>지출 쓰기</button>` : `<button data-tab="rep"><i>${I.rep}</i>주간 보고</button>`}
+  </div>
   ${approvalCard()}
   ${S.d.admin? teamStrip():''}
-  <div class="card"><div class="ch"><h3>오늘 할 일</h3><span class="chip blue">${done}/${rs.length}</span></div>
-    ${rs.length? rs.map(r=>todoRow(r, td)).join('') : '<div class="empty">오늘은 정기업무가 없어요</div>'}</div>
+  ${rs.length? `<div class="card"><div class="ch"><h3>오늘 할 일</h3><span class="chip blue">${done}/${rs.length}</span></div>
+    ${rs.map(r=>todoRow(r, td)).join('')}</div>` : ''}
   ${sm? `<div class="card sales"><div class="ch"><h3>가맹 영업</h3><a class="more" href="${esc(S.d.salesAppUrl||SALES_APP)}" target="_blank">영업앱 열기 ›</a></div>
     <div class="stats"><div class="${sm.followT?'bad':''}"><b>${sm.followT}</b><span>오늘 재연락</span></div><div><b>${sm.callT}</b><span>오늘 통화</span></div><div><b>${sm.callW}</b><span>이번 주 통화</span></div><div><b>${sm.propW}</b><span>이번 주 제안</span></div></div>
     ${sm.followT? `<p style="font-size:13px;color:var(--sub);margin-top:8px">재연락: ${esc(((sales.follow||{})[me]||[]).slice(0,4).join(', '))}${sm.followT>4?' 외 '+(sm.followT-4)+'곳':''}</p>`:''}</div>`:''}`;
@@ -335,7 +366,7 @@ function teamStrip(){
 function taskCard(t){
   const od = overdue(t); const cm = (()=>{ try{ return JSON.parse(t.comments||'[]').length; }catch(e){ return 0; } })();
   return `<button class="task" data-act="task" data-id="${esc(t.id)}"><div class="r1"><b>${esc(t.title)}</b>${stChip(t.status)}</div>
-  <div class="r2">${av(t.owner,'sm')}<span>${esc(t.owner)}</span>${prioChip(t.prio)}${t.due?`<span class="chip ${od?'red':t.due===S.today?'gold':''}">${esc(mdShort(t.due))} · ${esc(dday(t.due))}</span>`:''}${t.cat?`<span class="cat">${esc(t.cat)}</span>`:''}${cm?`<span>댓글 ${cm}</span>`:''}</div>
+  <div class="r2">${av(t.owner,'sm')}<span>${assigned(t)?esc(t.by)+' → ':''}${esc(t.owner)}</span>${prioChip(t.prio)}${t.due?`<span class="chip ${od?'red':t.due===S.today?'gold':''}">${esc(mdShort(t.due))} · ${esc(dday(t.due))}</span>`:''}${t.cat?`<span class="cat">${esc(t.cat)}</span>`:''}${cm?`<span>댓글 ${cm}</span>`:''}</div>
   <div class="bar ${t.status==='완료'?'g':''}"><i style="width:${Number(t.progress)||0}%"></i></div></button>`;
 }
 
@@ -615,8 +646,10 @@ function finCalc(){ const el = $('#f_calc'); if (!el) return; const v = pillVal(
 const VIEWS = { home: viewHome, cal: viewCal, task: viewTask, rep: viewRep, sales: viewSales, fin: viewFin, admin: viewAdmin };
 
 /* ============ 시트(모달) ============ */
-function sheet(html){ closeSheet(); const d = document.createElement('div'); d.className='dim'; d.id='dim'; d.innerHTML=`<div class="sheet"><div class="grab"></div>${html}</div>`; d.addEventListener('click', e=>{ if(e.target===d) closeSheet(); }); document.body.appendChild(d); }
-function closeSheet(){ const d = $('#dim'); if (d) d.remove(); }
+function sheet(html){ const had = !!$('#dim'); if (had) $('#dim').remove(); const d = document.createElement('div'); d.className='dim'; d.id='dim'; d.innerHTML=`<div class="sheet"><button class="x" data-act="closeSheet" aria-label="닫기">✕</button><div class="grab"></div>${html}</div>`; d.addEventListener('click', e=>{ if(e.target===d) closeSheet(); }); document.body.appendChild(d); if (!had) history.pushState({ sheet: 1 }, ''); }
+function closeSheet(fromPop){ const d = $('#dim'); if (!d) return; d.remove(); if (!fromPop && history.state && history.state.sheet) history.back(); }
+window.addEventListener('popstate', () => { if ($('#dim')) closeSheet(true); });
+document.addEventListener('keydown', e => { if (e.key==='Escape') closeSheet(); });
 const opt = (arr, v) => arr.map(x=>{ const [val,lab] = Array.isArray(x)?x:[x,x]; return `<option value="${esc(val)}" ${String(val)===String(v)?'selected':''}>${esc(lab)}</option>`; }).join('');
 const memOpts = v => opt((S.d.members||[]).filter(m=>m.active!=='N').map(m=>m.name), v);
 const val = id => ($('#'+id)?.value ?? '').trim();
@@ -651,6 +684,7 @@ function taskSheet(id, preOwner){
   S.taskEdit = false;
   sheet(`<h3>${id?'업무 수정':S.d.admin?'업무 주기':'내 업무 추가'}</h3>
   <label class="f"><span>업무 제목</span><input class="in" id="t_title" value="${esc(t.title||'')}" placeholder="예) 12월 겨울 신메뉴 포스터 제작"></label>
+  <div class="pills dq">${[['오늘',0],['내일',1],['이번 주 금',(5-parse(S.today).getDay()+7)%7],['다음 주 월',((8-parse(S.today).getDay())%7)||7]].map(x=>`<button type="button" onclick="document.getElementById('t_due').value='${addD(S.today,x[1])}'">${x[0]}</button>`).join('')}</div>
   <div class="row2">${S.d.admin?`<label class="f"><span>누구에게</span><select class="in" id="t_owner">${memOpts(t.owner)}</select></label>`:`<input type="hidden" id="t_owner" value="${esc(t.owner)}"><label class="f"><span>담당</span><input class="in" value="${esc(t.owner)}" disabled></label>`}<label class="f"><span>마감일</span><input class="in" type="date" id="t_due" value="${esc(t.due||'')}"></label></div>
   <div class="row2"><label class="f"><span>우선순위</span><select class="in" id="t_prio">${opt(['보통','높음','긴급'], t.prio)}</select></label><label class="f"><span>분류</span><input class="in" id="t_cat" list="cats" value="${esc(t.cat||'')}" placeholder="예) 마케팅"></label></div>
   <datalist id="cats">${['마케팅','가맹 영업','지원사업','디자인','매장 운영','오픈 준비','교육','정산'].map(c=>`<option value="${c}">`).join('')}</datalist>
@@ -739,7 +773,12 @@ document.addEventListener('click', async e => {
   const tb = e.target.closest('[data-tab]'); if (tb) { S.tab = tb.dataset.tab; closeSheet(); render(); window.scrollTo(0,0); return; }
   const el = e.target.closest('[data-act]'); if (!el) return;
   const a = el.dataset.act, ds = el.dataset, dim = $('#dim')?.dataset || {};
-  switch (a) {
+  const busy = el.classList.contains('btn') && /save|Save|Appr|approve|reject|report|Check|del|Del|Copy/.test(a);
+  if (busy) { if (el.dataset.busy) return; el.dataset.busy = '1'; }
+  try { switch (a) {
+    case 'closeSheet': closeSheet(); break;
+    case 'refresh': el.style.transform='rotate(360deg)'; el.style.transition='transform .6s'; await load(); toast('새로 불러왔어요'); break;
+    case 'quickExp': S.tab='fin'; S.finSeg='out'; S.finM = S.today.slice(0,7); render(); finSheet('', '지출'); break;
     case 'logout': logout(); break;
     case 'toggle': { const c = chk(ds.date, ds.rid); const done = !(c && c.done==='Y'); el.classList.toggle('on', done); el.innerHTML = done?I.check:''; const j = await api('check', { date: ds.date, rid: ds.rid, done, memo: c?.memo||'' }); if (!j.ok) { toast(j.error); } else { S.d.checks = (S.d.checks||[]).filter(x=>x.id!==j.obj.id).concat(j.obj); if (done) toast('완료했어요'); render(); } break; }
     case 'routine': routineSheet(ds.rid, ds.date); break;
@@ -803,7 +842,7 @@ document.addEventListener('click', async e => {
     case 'resetPin': { if (!confirm(dim.id+'님의 PIN을 초기화할까요? 다음 로그인 때 새 PIN을 정합니다.')) return; const j = await api('resetPin', { target: dim.id }); toast(j.ok?'PIN을 초기화했어요':j.error); break; }
     case 'settings': settingsSheet(); break;
     case 'saveSettings': { const hol = val('s_hol').split(/\s+/).filter(Boolean); const body = { holidays: hol }; if (val('s_sales')) body.salesSheetUrl = val('s_sales'); const j = await api('settings', body); if (!j.ok) return toast(j.error); closeSheet(); toast('설정을 저장했어요'); load(); break; }
-  }
+  } } finally { if (busy && el.isConnected) delete el.dataset.busy; }
 });
 
 /* ============ 로그인 ============ */
